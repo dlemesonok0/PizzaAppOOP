@@ -35,8 +35,7 @@ public abstract class Repository<T> : IRepository<T> where T : BaseEntity
         var item = GetByName(name);
         if (item == null) 
             throw new KeyNotFoundException($"{name} is not present in the repository");
-        _items.Remove(item);
-        _items.Add(_factory.Create(name, cost));
+        item.Update(newName, cost);
     }
     
     public virtual void Update(string name, BaseEntity entity)
@@ -44,9 +43,7 @@ public abstract class Repository<T> : IRepository<T> where T : BaseEntity
         var item = GetByName(name);
         if (item == null) 
             throw new KeyNotFoundException($"{name} is not present in the repository");
-        
-        _items.Remove(item);
-        _items.Add(entity as T);
+        item.Update(entity.Name, entity.Cost);
     }
 
     public void Delete(string name)
