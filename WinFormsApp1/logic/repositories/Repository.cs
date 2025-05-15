@@ -35,6 +35,9 @@ public abstract class Repository<T> : IRepository<T> where T : BaseEntity
         var item = GetByName(name);
         if (item == null) 
             throw new KeyNotFoundException($"{name} is not present in the repository");
+        item = GetByName(newName);
+        if (item != null)
+            throw new KeyNotFoundException($"{name} is present in the repository");
         item.Update(newName, cost);
     }
     
@@ -43,6 +46,9 @@ public abstract class Repository<T> : IRepository<T> where T : BaseEntity
         var item = GetByName(name);
         if (item == null) 
             throw new KeyNotFoundException($"{name} is not present in the repository");
+        item = GetByName(entity.Name);
+        if (item != null)
+            throw new KeyNotFoundException($"{name} is present in the repository");
         item.Update(entity.Name, entity.Cost);
     }
 

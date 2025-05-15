@@ -11,6 +11,7 @@ public class Pizza : BaseEntity
     public Pizza(string name, PizzaBase newPizzaBase, IEnumerable<Ingredient> ingredients) : base(name, 0)
     {
         pizzaBase = newPizzaBase;
+        pizzaIngredients = [];
         foreach (var ingredient in ingredients)
         {
             pizzaIngredients.Add(ingredient);
@@ -18,22 +19,33 @@ public class Pizza : BaseEntity
         Console.WriteLine($"Added pizza {name}");
     }
 
+    public new void Update(string newName, PizzaBase pizzaBase, List<Ingredient> ingredients)
+    {
+        EditName(newName);
+        EditBase(pizzaBase);
+        pizzaIngredients = ingredients;
+    }
+
+    public void EditName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name)) 
+            throw new ArgumentNullException(nameof(name), " cannot be null or empty.");
+        Name = name;
+    }
+
     public void EditBase(PizzaBase newPizzaBase)
     {
         pizzaBase = newPizzaBase;
-        Console.WriteLine($"Edited pizza {this} (base: {newPizzaBase})");
     }
 
     public void AddIngredient(Ingredient ingredient)
     {
         pizzaIngredients.Add(ingredient);
-        Console.WriteLine($"Edited pizza {this} (new ingredient: {ingredient})");
     }
 
     public void RemoveIngredient(Ingredient ingredient)
     {
         pizzaIngredients.Remove(ingredient);
-        Console.WriteLine($"Edited pizza {this} (remove ingredient: {ingredient})");
     }
 
     public override string ToString()

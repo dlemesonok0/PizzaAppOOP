@@ -28,7 +28,7 @@ public partial class MainForm : Form
 
         btnIngredients.Click += (s, e) => OpenForm(new IngredientsForm(_ingredientRepo));
         btnBases.Click += (s, e) => OpenForm(new PizzaBasesForm(_baseRepo));
-        // btnPizzas.Click += (s, e) => OpenForm(new PizzasForm(_pizzaRepo, _baseRepo, _ingredientRepo));
+        btnPizzas.Click += (s, e) => OpenForm(new PizzasForm(_pizzaRepo, _baseRepo, _ingredientRepo));
 
         Controls.Add(btnIngredients);
         Controls.Add(btnBases);

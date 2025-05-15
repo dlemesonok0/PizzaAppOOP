@@ -11,7 +11,7 @@ public abstract class BaseEntity {
         Cost = cost;
     }
     
-    public void Update(string newName, decimal newCost)
+    public virtual void Update(string newName, decimal newCost)
     {
         Validate(newName, newCost);
         Name = newName;

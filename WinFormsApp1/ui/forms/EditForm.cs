@@ -4,8 +4,8 @@ public abstract class EditForm<T> : Form where T : BaseEntity
 {
     protected T Entity { get; set; }
 
-    protected TextBox EntityNameTextBox { get; } = new TextBox();
-    protected NumericUpDown CostNumericUpDown { get; } = new NumericUpDown();
+    protected TextBox EntityNameTextBox { get; set; } = new TextBox();
+    protected NumericUpDown CostNumericUpDown { get; set; } = new NumericUpDown();
 
     protected EditForm()
     {

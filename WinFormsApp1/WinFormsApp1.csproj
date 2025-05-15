@@ -39,6 +39,9 @@
       <Compile Update="ui\Tabs\Tab.cs">
         <SubType>Form</SubType>
       </Compile>
+      <Compile Update="ui\forms\EditPizzaForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>
