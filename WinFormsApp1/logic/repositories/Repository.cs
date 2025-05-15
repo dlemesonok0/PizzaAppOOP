@@ -30,7 +30,7 @@ public abstract class Repository<T> : IRepository<T> where T : BaseEntity
         _items.Add(entity as T);
     }
 
-    public void Update(string name, string newName, decimal cost)
+    public virtual void Update(string name, string newName, decimal cost)
     {
         var item = GetByName(name);
         if (item == null) 
@@ -46,7 +46,7 @@ public abstract class Repository<T> : IRepository<T> where T : BaseEntity
         item.Update(entity.Name, entity.Cost);
     }
 
-    public void Delete(string name)
+    public virtual void Delete(string name)
     {
         _items.Remove(GetByName(name));
     }

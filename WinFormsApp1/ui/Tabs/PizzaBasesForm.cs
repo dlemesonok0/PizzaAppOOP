@@ -5,8 +5,10 @@ namespace WinFormsApp1;
 
 public partial class PizzaBasesForm : Tab<PizzaBase>
 {
+    private new PizzaBaseRepository _repo;
     public PizzaBasesForm(PizzaBaseRepository repo) : base(repo, "Основы")
     {
+        _repo = repo;
     }
     
     protected override void EditButton_Click(object sender, EventArgs e)
@@ -32,5 +34,13 @@ public partial class PizzaBasesForm : Tab<PizzaBase>
             _repo.Add(newPizzaBase.Text, newPizzaBase.Value);
             LoadData();
         }
+    }
+    
+    protected override void DeleteButton_Click(object sender, EventArgs e)
+    {
+        var selected = listBox.SelectedItem as BaseEntity;
+        if (selected == null) return;
+        _repo.Delete(selected.Name);
+        LoadData();
     }
 }
