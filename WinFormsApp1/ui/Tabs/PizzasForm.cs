@@ -29,12 +29,20 @@ public partial class PizzasForm : Tab<Pizza>
     
     protected override void AddButton_Click(object sender, EventArgs e)
     {
-        using var form = new AddIngredientForm();
+        using var form = new AddPizzaForm(_baseRepo, _ingredientRepo);
         if (form.ShowDialog() == DialogResult.OK)
         {
-            var newIngredient = form.GetResult();
-            _repo.Add(newIngredient.Text, newIngredient.Value);
+            var newPizza = form.GetResult();
+            _repo.Add(newPizza);
             LoadData();
         }
+    }
+    
+    protected override void DeleteButton_Click(object sender, EventArgs e)
+    {
+        var selected = listBox.SelectedItem as Pizza;
+        if (selected == null) return;
+        _repo.Delete(selected.Name);
+        LoadData();
     }
 }

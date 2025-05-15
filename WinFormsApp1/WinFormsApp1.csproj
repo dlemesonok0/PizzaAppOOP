@@ -42,6 +42,9 @@
       <Compile Update="ui\forms\EditPizzaForm.cs">
         <SubType>Form</SubType>
       </Compile>
+      <Compile Update="ui\forms\AddPizzaForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>

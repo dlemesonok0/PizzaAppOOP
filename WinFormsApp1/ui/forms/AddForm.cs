@@ -5,7 +5,7 @@ public partial class AddForm<T> : Form where T : BaseEntity
     private string _name;
         private decimal _cost;
 
-        private TextBox EntityNameTextBox { get; } = new TextBox();
+        protected TextBox EntityNameTextBox { get; set; } = new TextBox();
         private NumericUpDown CostNumericUpDown { get; } = new NumericUpDown();
 
         public AddForm(string title = "Добавить")
@@ -50,7 +50,7 @@ public partial class AddForm<T> : Form where T : BaseEntity
             Controls.Add(cancelButton);
         }
 
-        private void SaveButton_Click(object sender, EventArgs e)
+        protected virtual void SaveButton_Click(object sender, EventArgs e)
         {
             _name = EntityNameTextBox.Text;
             _cost = CostNumericUpDown.Value;
