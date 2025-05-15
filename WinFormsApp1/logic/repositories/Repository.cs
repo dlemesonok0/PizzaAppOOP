@@ -6,42 +6,62 @@ namespace WinFormsApp1.repositories;
 
 public abstract class Repository<T> : IRepository<T> where T : BaseEntity
 {
-    private readonly BindableDictionary<string, T> _items = new();
-    private Factory<T> _factory;
-
+    private readonly List<T> _items = new();
+    protected IFactory<T> _factory;
+    
+    protected Repository(IFactory<T> factory)
+    {
+        _factory = factory;
+    }
+    
     public void Add(string name, decimal cost)
     {
-        _items.Add(name, _factory.Create(name, cost));
+        var item = GetByName(name);
+        if (item != null) 
+            throw new KeyNotFoundException($"{item} is present in the repository");
+        _items.Add(_factory.Create(name, cost));
     }
     
     public void Add(BaseEntity entity)
     {
-        _items.Add(entity.Name, entity as T);
+        var item = GetByName(entity.Name);
+        if (item != null) 
+            throw new KeyNotFoundException($"{entity} is present in the repository");
+        _items.Add(entity as T);
     }
 
     public void Update(string name, string newName, decimal cost)
     {
-        if (!_items.ContainsKey(name))
+        var item = GetByName(name);
+        if (item == null) 
+            throw new KeyNotFoundException($"{name} is not present in the repository");
+        _items.Remove(item);
+        _items.Add(_factory.Create(name, cost));
+    }
+    
+    public virtual void Update(string name, BaseEntity entity)
+    {
+        var item = GetByName(name);
+        if (item == null) 
             throw new KeyNotFoundException($"{name} is not present in the repository");
         
-        _items.Remove(name);
-        _items.Add(name, _factory.Create(name, cost));
+        _items.Remove(item);
+        _items.Add(entity as T);
     }
 
     public void Delete(string name)
     {
-        _items.Remove(name);
+        _items.Remove(GetByName(name));
     }
 
     public T GetByName(string name)
     {
-        if (!_items.ContainsKey(name)) 
-            throw new KeyNotFoundException($"{name} is not present in the repository");
-        return _items[name];
+        var item = _items.FirstOrDefault(x => x.Name == name);
+        return item;
     }
 
     public IEnumerable<T> GetAll()
     {
-        return _items.Values;
+        return _items;
     }
 }

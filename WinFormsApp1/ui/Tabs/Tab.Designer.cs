@@ -1,14 +1,16 @@
-﻿namespace WinFormsApp1;
+using System.ComponentModel;
 
-partial class Form1
+namespace WinFormsApp1;
+
+partial class Tab : Form
 {
     /// <summary>
-    ///  Required designer variable.
+    /// Required designer variable.
     /// </summary>
-    private System.ComponentModel.IContainer components = null;
+    private IContainer components = null;
 
     /// <summary>
-    ///  Clean up any resources being used.
+    /// Clean up any resources being used.
     /// </summary>
     /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
     protected override void Dispose(bool disposing)
@@ -29,16 +31,10 @@ partial class Form1
     /// </summary>
     private void InitializeComponent()
     {
-        SuspendLayout();
-        // 
-        // Form1
-        // 
-        AutoScaleDimensions = new System.Drawing.SizeF(13F, 32F);
-        AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        ClientSize = new System.Drawing.Size(1262, 829);
-        Text = "Form1";
-        Load += Form1_Load;
-        ResumeLayout(false);
+        this.components = new System.ComponentModel.Container();
+        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        this.ClientSize = new System.Drawing.Size(800, 450);
+        this.Text = "Tab";
     }
 
     #endregion

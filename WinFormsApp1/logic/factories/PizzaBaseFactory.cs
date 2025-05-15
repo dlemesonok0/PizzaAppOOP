@@ -13,7 +13,7 @@ public class PizzaBaseFactory : Factory<PizzaBase>
     
     public override PizzaBase Create(string name, decimal cost)
     {
-        if (_repository.Classic == null) 
+        if (name.ToLower() != "classic" && _repository.Classic == null) 
             throw new ArgumentException(nameof(_repository), " doesn't have a Classic base.");
         
         if (name.ToLower() != "classic" && cost > _repository.Classic.Cost * 1.2m)
