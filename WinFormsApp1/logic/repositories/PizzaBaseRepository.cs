@@ -18,8 +18,6 @@ public class PizzaBaseRepository : Repository<PizzaBase>
 
     public virtual void Update(string name, string newName, decimal cost)
     {
-        if (name == "Classic" && newName != "Classic")
-            throw new ArgumentException("You cannot change the classic base name.");
         if (name == "Classic")
         {
             foreach (var other in GetAll().Where(i => i.Name != "Classic"))
@@ -34,8 +32,6 @@ public class PizzaBaseRepository : Repository<PizzaBase>
     }
     public override void Update(string name, BaseEntity entity)
     {
-        if (name == "Classic" && entity.Name != "Classic")
-            throw new ArgumentException("You cannot change the classic base name.");
         _factory.Create(entity.Name, entity.Cost);
         if (name == "Classic")
         {
