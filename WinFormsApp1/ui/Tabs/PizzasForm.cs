@@ -22,7 +22,14 @@ public partial class PizzasForm : Tab<Pizza>
         if (form.ShowDialog() == DialogResult.OK)
         {
             var updated = form.GetResult();
-            _repo.Update(selected.Name, updated);
+            try
+            {
+                _repo.Update(selected.Name, updated);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             LoadData();
         }
     }
@@ -33,7 +40,14 @@ public partial class PizzasForm : Tab<Pizza>
         if (form.ShowDialog() == DialogResult.OK)
         {
             var newPizza = form.GetResult();
-            _repo.Add(newPizza);
+            try
+            {
+                _repo.Add(newPizza);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             LoadData();
         }
     }
@@ -42,7 +56,14 @@ public partial class PizzasForm : Tab<Pizza>
     {
         var selected = listBox.SelectedItem as Pizza;
         if (selected == null) return;
-        _repo.Delete(selected.Name);
+        try
+        {
+            _repo.Delete(selected.Name);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
         LoadData();
     }
 }

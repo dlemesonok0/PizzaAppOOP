@@ -1,4 +1,5 @@
 using WinFormsApp1.forms;
+using WinFormsApp1.logic.repositories;
 using WinFormsApp1.repositories;
 
 namespace WinFormsApp1;
@@ -47,12 +48,19 @@ public abstract partial class Tab<T> : Form where T : BaseEntity
     
     protected abstract void EditButton_Click(object sender, EventArgs e);
     protected abstract void AddButton_Click(object sender, EventArgs e);
-
+    
     protected virtual void DeleteButton_Click(object sender, EventArgs e)
     {
         var selected = listBox.SelectedItem as BaseEntity;
         if (selected == null) return;
-        _repo.Delete(selected.Name);
+        try
+        {
+            _repo.Delete(selected.Name);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
         LoadData();
     }
 }

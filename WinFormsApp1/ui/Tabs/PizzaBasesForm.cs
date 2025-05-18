@@ -20,7 +20,14 @@ public partial class PizzaBasesForm : Tab<PizzaBase>
         if (form.ShowDialog() == DialogResult.OK)
         {
             var updated = form.GetResult();
-            _repo.Update(selected.Name, updated);
+            try
+            {
+                _repo.Update(selected.Name, updated);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             LoadData();
         }
     }
@@ -31,7 +38,14 @@ public partial class PizzaBasesForm : Tab<PizzaBase>
         if (form.ShowDialog() == DialogResult.OK)
         {
             var newPizzaBase = form.GetResult();
-            _repo.Add(newPizzaBase.Text, newPizzaBase.Value);
+            try
+            {
+                _repo.Add(new PizzaBase(newPizzaBase.Text, newPizzaBase.Value));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             LoadData();
         }
     }
@@ -40,7 +54,14 @@ public partial class PizzaBasesForm : Tab<PizzaBase>
     {
         var selected = listBox.SelectedItem as BaseEntity;
         if (selected == null) return;
-        _repo.Delete(selected.Name);
+        try
+        {
+            _repo.Delete(selected.Name);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
         LoadData();
     }
 }

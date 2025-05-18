@@ -112,9 +112,14 @@ public partial class EditPizzaForm : EditForm<Pizza>
                     selectedIngredients.Add((Ingredient)ingredientsCheckedList.Items[i]);
                 }
             }
-
-            _pizza.Update(EntityName, (PizzaBase)baseComboBox.SelectedItem, selectedIngredients);
-            
+            try
+            {
+                _pizza.Update(EntityName, (PizzaBase)baseComboBox.SelectedItem, selectedIngredients);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             Entity = _pizza;
         }
     }

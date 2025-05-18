@@ -18,7 +18,14 @@ public partial class IngredientsForm : Tab<Ingredient>
         if (form.ShowDialog() == DialogResult.OK)
         {
             var updated = form.GetResult();
-            _repo.Update(selected.Name, updated);
+            try
+            {
+                _repo.Update(selected.Name, updated);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             LoadData();
         }
     }
@@ -29,7 +36,14 @@ public partial class IngredientsForm : Tab<Ingredient>
         if (form.ShowDialog() == DialogResult.OK)
         {
             var newIngredient = form.GetResult();
-            _repo.Add(newIngredient.Text, newIngredient.Value);
+            try
+            {
+                _repo.Add(newIngredient.Text, newIngredient.Value);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             LoadData();
         }
     }

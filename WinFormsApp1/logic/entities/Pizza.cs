@@ -16,7 +16,6 @@ public class Pizza : BaseEntity
         {
             pizzaIngredients.Add(ingredient);
         }
-        Console.WriteLine($"Added pizza {name}");
     }
 
     public new void Update(string newName, PizzaBase pizzaBase, List<Ingredient> ingredients)

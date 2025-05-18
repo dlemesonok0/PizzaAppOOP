@@ -98,7 +98,14 @@ public partial class AddPizzaForm : AddForm<Pizza>
             }
 
             var pizzaBase = (PizzaBase)baseComboBox.SelectedItem;
-            Result = new Pizza(EntityName, pizzaBase, selectedIngredients);
+            try
+            {
+                Result = new Pizza(EntityName, pizzaBase, selectedIngredients);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             DialogResult = DialogResult.OK;
             Close();

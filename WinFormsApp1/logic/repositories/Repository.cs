@@ -1,8 +1,7 @@
-using System.ComponentModel;
 using WinFormsApp1.factories;
-using WinFormsApp1.util;
+using WinFormsApp1.repositories;
 
-namespace WinFormsApp1.repositories;
+namespace WinFormsApp1.logic.repositories;
 
 public abstract class Repository<T> : IRepository<T> where T : BaseEntity
 {

@@ -8,5 +8,6 @@ public class PizzaBase : BaseEntity
     {
         if (Name == "Classic" && newName != "Classic")
             throw new ArgumentException("You cannot change the classic base name.");
+        base.Update(newName, newCost);
     }
 }
