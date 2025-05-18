@@ -6,7 +6,7 @@ namespace WinFormsApp1;
 
 public abstract partial class Tab<T> : Form where T : BaseEntity
 {
-    protected readonly Repository<T> _repo;
+    protected Repository<T> _repo;
     protected ListBox listBox;
     
     public Tab(Repository<T> repo, string tabName)

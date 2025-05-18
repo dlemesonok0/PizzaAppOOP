@@ -56,9 +56,9 @@ public abstract class Repository<T> : IRepository<T> where T : BaseEntity
         _items.Remove(GetByName(name));
     }
 
-    public T GetByName(string name)
+    public T? GetByName(string name)
     {
-        var item = _items.FirstOrDefault(x => x.Name == name);
+        var item = _items.FirstOrDefault(x => x.Name == name, null);
         return item;
     }
 

@@ -8,16 +8,4 @@ public partial class EditPizzaBaseForm : EditForm<PizzaBase>
         EntityCost = pizzaBase.Cost;
         Entity = pizzaBase;
     }
-
-    protected override void SaveEntity()
-    {
-        try
-        {
-            Entity = new PizzaBase(EntityName, EntityCost);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-    }
 }

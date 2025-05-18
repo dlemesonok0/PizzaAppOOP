@@ -8,16 +8,4 @@ public partial class EditIngredientForm : EditForm<Ingredient>
         EntityCost = ingredient.Cost;
         Entity = ingredient;
     }
-
-    protected override void SaveEntity()
-    {
-        try
-        {
-            Entity = new Ingredient(EntityName, EntityCost);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-    }
 }

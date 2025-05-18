@@ -1,28 +1,32 @@
+using System.ComponentModel;
 using WinFormsApp1.forms;
+using WinFormsApp1.logic.repositories;
 using WinFormsApp1.repositories;
 
 namespace WinFormsApp1;
 
-public partial class PizzaBasesForm : Tab<PizzaBase>
+public partial class PizzaCrustForm : Tab<PizzaCrust>
 {
-    private new PizzaBaseRepository _repo;
-    public PizzaBasesForm(PizzaBaseRepository repo) : base(repo, "Основы")
+    protected PizzaCrustRepository _repo; 
+    public PizzaRepository _pizzaRepository;
+    public PizzaCrustForm(PizzaCrustRepository repo, PizzaRepository pizzaRepository) : base(repo, "Бортики")
     {
         _repo = repo;
+        _pizzaRepository = pizzaRepository;
     }
-    
+
     protected override void EditButton_Click(object sender, EventArgs e)
     {
-        var selected = listBox.SelectedItem as PizzaBase;
+        var selected = listBox.SelectedItem as PizzaCrust;
         if (selected == null) return;
 
-        using var form = new EditPizzaBaseForm(selected);
+        using var form = new EditPizzaCrustForm(selected, _pizzaRepository);
         if (form.ShowDialog() == DialogResult.OK)
         {
             var updated = form.GetResult();
             try
             {
-                _repo.Update(selected.Name, updated.Text, updated.Value);
+                _repo.Update(selected.Name, updated.Text, updated.Value, updated.List, updated.Mode);
             }
             catch (Exception ex)
             {
@@ -31,16 +35,16 @@ public partial class PizzaBasesForm : Tab<PizzaBase>
             LoadData();
         }
     }
-    
+
     protected override void AddButton_Click(object sender, EventArgs e)
     {
-        using var form = new AddPizzaBaseForm();
+        using var form = new AddPizzaCrustForm(_pizzaRepository);
         if (form.ShowDialog() == DialogResult.OK)
         {
-            var newPizzaBase = form.GetResult();
+            var newIngredient = form.GetResult();
             try
             {
-                _repo.Add(new PizzaBase(newPizzaBase.Text, newPizzaBase.Value));
+                _repo.Add(newIngredient.Text, newIngredient.Value);
             }
             catch (Exception ex)
             {
@@ -48,20 +52,5 @@ public partial class PizzaBasesForm : Tab<PizzaBase>
             }
             LoadData();
         }
-    }
-    
-    protected override void DeleteButton_Click(object sender, EventArgs e)
-    {
-        var selected = listBox.SelectedItem as BaseEntity;
-        if (selected == null) return;
-        try
-        {
-            _repo.Delete(selected.Name);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-        LoadData();
     }
 }

@@ -49,6 +49,6 @@ public class Pizza : BaseEntity
 
     public override string ToString()
     {
-        return $"{Name} - ({Cost}) : PizzaBase: {pizzaBase}, PizzaIngredients: {string.Join(" ", pizzaIngredients)}";
+        return $"{Name} - ({Cost:C}) : PizzaBase: {pizzaBase}, PizzaIngredients: {string.Join(" ", pizzaIngredients)}";
     }
 }

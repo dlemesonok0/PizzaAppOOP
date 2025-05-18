@@ -20,7 +20,7 @@ public partial class IngredientsForm : Tab<Ingredient>
             var updated = form.GetResult();
             try
             {
-                _repo.Update(selected.Name, updated);
+                _repo.Update(selected.Name, updated.Text, updated.Value);
             }
             catch (Exception ex)
             {

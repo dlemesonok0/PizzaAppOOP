@@ -68,7 +68,6 @@ public partial class EditPizzaForm : EditForm<Pizza>
 
             saveButton.Click += (s, e) =>
             {
-                SaveEntity();
                 DialogResult = DialogResult.OK;
                 Close();
             };
@@ -101,25 +100,33 @@ public partial class EditPizzaForm : EditForm<Pizza>
                 ingredientsCheckedList.Items.Add(ingredient, _pizza.pizzaIngredients.Any(i => i.Name == ingredient.Name));
             }
         }
-
-        protected override void SaveEntity()
+        
+        public (string? Text, PizzaBase pizzaBase, List<Ingredient> List) GetResult()
         {
-            var selectedIngredients = new List<Ingredient>();
-            for (int i = 0; i < ingredientsCheckedList.Items.Count; i++)
+            return DialogResult == DialogResult.OK ? (EntityName, EntityBase, EntityList) : (null, null, []);
+        }
+
+        private List<Ingredient> EntityList
+        {
+            get
             {
-                if (ingredientsCheckedList.GetItemChecked(i))
+                var selectedIngredients = new List<Ingredient>();
+                for (int i = 0; i < ingredientsCheckedList.Items.Count; i++)
                 {
-                    selectedIngredients.Add((Ingredient)ingredientsCheckedList.Items[i]);
+                    if (ingredientsCheckedList.GetItemChecked(i))
+                    {
+                        selectedIngredients.Add((Ingredient)ingredientsCheckedList.Items[i]);
+                    }
                 }
+                return selectedIngredients;
             }
-            try
+        }
+
+        private PizzaBase EntityBase
+        {
+            get
             {
-                _pizza.Update(EntityName, (PizzaBase)baseComboBox.SelectedItem, selectedIngredients);
+                return (PizzaBase)baseComboBox.SelectedItem;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            Entity = _pizza;
         }
     }

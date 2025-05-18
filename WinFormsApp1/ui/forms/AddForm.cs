@@ -6,7 +6,7 @@ public partial class AddForm<T> : Form where T : BaseEntity
         private decimal _cost;
 
         protected TextBox EntityNameTextBox { get; set; } = new TextBox();
-        private NumericUpDown CostNumericUpDown { get; } = new NumericUpDown();
+        protected NumericUpDown CostNumericUpDown { get; } = new NumericUpDown();
 
         public AddForm(string title = "Добавить")
         {

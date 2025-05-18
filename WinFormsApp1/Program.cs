@@ -1,3 +1,4 @@
+using WinFormsApp1.logic.repositories;
 using WinFormsApp1.repositories;
 
 namespace WinFormsApp1;
@@ -13,6 +14,7 @@ static class Program
         var ingredientRepo = new IngredientRepository();
         var pizzaBaseRepo = new PizzaBaseRepository();
         var pizzaRepo = new PizzaRepository();
+        var pizzaCrustRepo = new PizzaCrustRepository();
         
         ingredientRepo.Add("Сыр моцарелла", 150);
         ingredientRepo.Add("Пепперони", 120);
@@ -39,7 +41,11 @@ static class Program
         pizzaRepo.Add(new Pizza("Пепперони", classicBase, [mozzarella, pepperoni]));
         pizzaRepo.Add(new Pizza("Маргарита", classicBase, [mozzarella]));
         pizzaRepo.Add(new Pizza("Гавайская", classicBase, [mozzarella, ham, mushrooms]));
+        
+        pizzaCrustRepo.Add(new PizzaCrust("Сырный", 30, [pizzaRepo.GetByName("Пепперони")], true));
+        pizzaCrustRepo.Add(new PizzaCrust("Острый", 50, [pizzaRepo.GetByName("Маргарита"), pizzaRepo.GetByName("Пепперони")], false));
+        pizzaCrustRepo.Add(new PizzaCrust("Вегетарианский", 40, [pizzaRepo.GetByName("Маргарита"), pizzaRepo.GetByName("Пепперони"), pizzaRepo.GetByName("Гавайская")], true));
 
-        Application.Run(new MainForm(ingredientRepo, pizzaBaseRepo, pizzaRepo));
+        Application.Run(new MainForm(ingredientRepo, pizzaBaseRepo, pizzaRepo, pizzaCrustRepo));
     }
 }

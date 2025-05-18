@@ -7,10 +7,12 @@ public partial class PizzasForm : Tab<Pizza>
 {
     private PizzaBaseRepository _baseRepo;
     private IngredientRepository _ingredientRepo;
+    private PizzaRepository _repo;
     public PizzasForm(PizzaRepository repo, PizzaBaseRepository baseRepo, IngredientRepository ingredientRepo) : base(repo, "Пиццы")
     {
         _baseRepo = baseRepo;
         _ingredientRepo = ingredientRepo;
+        _repo = repo;
     }
     
     protected override void EditButton_Click(object sender, EventArgs e)
@@ -24,7 +26,7 @@ public partial class PizzasForm : Tab<Pizza>
             var updated = form.GetResult();
             try
             {
-                _repo.Update(selected.Name, updated);
+                _repo.Update(selected.Name, updated.Text, updated.pizzaBase, updated.List);
             }
             catch (Exception ex)
             {

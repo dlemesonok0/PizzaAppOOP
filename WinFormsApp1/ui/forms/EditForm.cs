@@ -39,7 +39,6 @@ public abstract class EditForm<T> : Form where T : BaseEntity
         var saveButton = new Button { Text = "Сохранить", Left = 90, Top = 100, Width = 100 };
         saveButton.Click += (s, e) =>
         {
-            SaveEntity();
             DialogResult = DialogResult.OK;
             Close();
         };
@@ -59,11 +58,9 @@ public abstract class EditForm<T> : Form where T : BaseEntity
         Controls.Add(cancelButton);
     }
 
-    protected abstract void SaveEntity();
-
-    public T GetResult()
+    public (string? Text, decimal Value) GetResult()
     {
-        return DialogResult == DialogResult.OK ? Entity : null;
+        return DialogResult == DialogResult.OK ? (EntityName, EntityCost) : (null, 0);
     }
 
     protected string EntityName
