@@ -38,9 +38,9 @@ static class Program
         var ham = ingredientRepo.GetByName("Ветчина");
         var mushrooms = ingredientRepo.GetByName("Грибы");
 
-        pizzaRepo.Add(new Pizza("Пепперони", classicBase, [mozzarella, pepperoni]));
-        pizzaRepo.Add(new Pizza("Маргарита", classicBase, [mozzarella]));
-        pizzaRepo.Add(new Pizza("Гавайская", classicBase, [mozzarella, ham, mushrooms]));
+        pizzaRepo.Add(new Pizza("Пепперони", classicBase, null, [mozzarella, pepperoni]));
+        pizzaRepo.Add(new Pizza("Маргарита", classicBase, null,[mozzarella]));
+        pizzaRepo.Add(new Pizza("Гавайская", classicBase, null, [mozzarella, ham, mushrooms]));
         
         pizzaCrustRepo.Add(new PizzaCrust("Сырный", [mozzarella, pepperoni], [pizzaRepo.GetByName("Пепперони")], true));
         pizzaCrustRepo.Add(new PizzaCrust("Острый", [mozzarella, ham], [pizzaRepo.GetByName("Маргарита"), pizzaRepo.GetByName("Пепперони")], false));

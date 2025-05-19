@@ -9,8 +9,8 @@ public class PizzaFactory : Factory<Pizza>
         throw new NotImplementedException("Для создания пиццы нужны ингредиенты и основа.");
     }
 
-    public Pizza Create(string name, PizzaBase pizzaBase, IEnumerable<Ingredient> ingredients)
+    public Pizza Create(string name, PizzaBase pizzaBase, PizzaCrust pizzaCrust, IEnumerable<Ingredient> ingredients)
     {
-        return new Pizza(name, pizzaBase, ingredients);
+        return new Pizza(name, pizzaBase, pizzaCrust, ingredients);
     }
 }

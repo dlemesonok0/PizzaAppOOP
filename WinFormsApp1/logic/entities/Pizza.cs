@@ -4,25 +4,39 @@ namespace WinFormsApp1;
 
 public class Pizza : BaseEntity
 {
-    public PizzaBase pizzaBase { get; private set; }
-    public List<Ingredient> pizzaIngredients { get; protected set; }
+    public PizzaBase Base { get; private set; }
+    public List<Ingredient> PizzaIngredients { get; protected set; }
+    
+    public PizzaCrust? Crust { get; protected set; }
 
-    public override decimal Cost => pizzaBase.Cost + pizzaIngredients.Sum(i => i.Cost);
-    public Pizza(string name, PizzaBase newPizzaBase, IEnumerable<Ingredient> ingredients) : base(name, 0)
+    public override decimal Cost 
     {
-        pizzaBase = newPizzaBase;
-        pizzaIngredients = [];
+        get
+        {
+            decimal sum = Base.Cost + PizzaIngredients.Sum(i => i.Cost);
+            if (Crust != null) sum += Crust.Cost;
+            return sum;
+        }
+    }
+    public Pizza(string name, PizzaBase newPizzaBase, PizzaCrust pizzaCrust, IEnumerable<Ingredient> ingredients) : base(name, 0)
+    {
+        Base = newPizzaBase;
+        PizzaIngredients = [];
+        Crust = pizzaCrust;
         foreach (var ingredient in ingredients)
         {
-            pizzaIngredients.Add(ingredient);
+            PizzaIngredients.Add(ingredient);
         }
     }
 
-    public new void Update(string newName, PizzaBase pizzaBase, List<Ingredient> ingredients)
+    public new void Update(string newName, PizzaBase pizzaBase, PizzaCrust pizzaCrust, List<Ingredient> ingredients)
     {
+        if (pizzaCrust != null && pizzaCrust.IsCompatibleWith(this))
+            throw new Exception("this crust doesn't fit to this pizza");
+        Crust = pizzaCrust;
         EditName(newName);
         EditBase(pizzaBase);
-        pizzaIngredients = ingredients;
+        PizzaIngredients = ingredients;
     }
 
     public void EditName(string name)
@@ -34,21 +48,21 @@ public class Pizza : BaseEntity
 
     public void EditBase(PizzaBase newPizzaBase)
     {
-        pizzaBase = newPizzaBase;
+        Base = newPizzaBase;
     }
 
     public void AddIngredient(Ingredient ingredient)
     {
-        pizzaIngredients.Add(ingredient);
+        PizzaIngredients.Add(ingredient);
     }
 
     public void RemoveIngredient(Ingredient ingredient)
     {
-        pizzaIngredients.Remove(ingredient);
+        PizzaIngredients.Remove(ingredient);
     }
 
     public override string ToString()
     {
-        return $"{Name} - ({Cost:C}) : PizzaBase: {pizzaBase}, PizzaIngredients: {string.Join(" ", pizzaIngredients)}";
+        return $"{Name} - ({Cost:C}) : PizzaCrust: {Crust}, PizzaBase: {Base}, PizzaIngredients: {string.Join(" ", PizzaIngredients)}";
     }
 }

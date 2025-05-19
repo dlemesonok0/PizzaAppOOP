@@ -1,5 +1,6 @@
 using WinFormsApp1.repositories;
 using System.ComponentModel;
+using WinFormsApp1.logic.repositories;
 
 namespace WinFormsApp1.forms;
 
@@ -7,16 +8,20 @@ public partial class AddPizzaForm : AddForm<Pizza>
     {
         private readonly PizzaBaseRepository _baseRepo;
         private readonly IngredientRepository _ingredientRepo;
+        private readonly PizzaCrustRepository _pizzaCrustRepo;
 
         private ComboBox baseComboBox;
         private CheckedListBox ingredientsCheckedList;
+        private ComboBox crustComboBox;
 
         public AddPizzaForm(
             PizzaBaseRepository baseRepo,
-            IngredientRepository ingredientRepo) : base("Добавить пиццу")
+            IngredientRepository ingredientRepo,
+            PizzaCrustRepository pizzaCrustRepo) : base("Добавить пиццу")
         {
             _baseRepo = baseRepo;
             _ingredientRepo = ingredientRepo;
+            _pizzaCrustRepo = pizzaCrustRepo;
 
             InitializeComponent();
             LoadData();
@@ -59,8 +64,17 @@ public partial class AddPizzaForm : AddForm<Pizza>
                 Height = 200
             };
             
-            var saveButton = new Button { Text = "Сохранить", Left = 100, Top = 350, Width = 100 };
-            var cancelButton = new Button { Text = "Отмена", Left = 220, Top = 350, Width = 100 };
+            var crustLabel = new Label { Text = "Бортик:", Left = 20, Top = 340 };
+            crustComboBox = new ComboBox
+            {
+                Left = 120,
+                Top = 340,
+                Width = 180,
+                DropDownStyle = ComboBoxStyle.DropDownList
+            };
+            
+            var saveButton = new Button { Text = "Сохранить", Left = 100, Top = 400, Width = 100 };
+            var cancelButton = new Button { Text = "Отмена", Left = 220, Top = 400, Width = 100 };
 
             saveButton.Click += SaveButton_Click;
             cancelButton.Click += (s, e) => DialogResult = DialogResult.Cancel;
@@ -73,6 +87,8 @@ public partial class AddPizzaForm : AddForm<Pizza>
             Controls.Add(ingredientsCheckedList);
             Controls.Add(saveButton);
             Controls.Add(cancelButton);
+            Controls.Add(crustLabel);
+            Controls.Add(crustComboBox);
         }
 
         private void LoadData()
@@ -84,6 +100,14 @@ public partial class AddPizzaForm : AddForm<Pizza>
             {
                 ingredientsCheckedList.Items.Add(ingredient);
             }
+            crustComboBox.Items.Add("Без бортика");
+            foreach (var crust in _pizzaCrustRepo.GetAll())
+            {
+                crustComboBox.Items.Add(crust);
+            }
+            
+            if (crustComboBox.Items.Count > 0)
+                crustComboBox.SelectedIndex = 0;
         }
 
         protected override void SaveButton_Click(object sender, EventArgs e)
@@ -98,9 +122,18 @@ public partial class AddPizzaForm : AddForm<Pizza>
             }
 
             var pizzaBase = (PizzaBase)baseComboBox.SelectedItem;
+            PizzaCrust pizzaCrust;
             try
             {
-                Result = new Pizza(EntityName, pizzaBase, selectedIngredients);
+                pizzaCrust = (PizzaCrust)crustComboBox.SelectedItem;
+            }
+            catch (Exception ex)
+            {
+                pizzaCrust = null;
+            }
+            try
+            {
+                Result = new Pizza(EntityName, pizzaBase, pizzaCrust, selectedIngredients);
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 using WinFormsApp1.forms;
+using WinFormsApp1.logic.repositories;
 using WinFormsApp1.repositories;
 
 namespace WinFormsApp1;
@@ -8,10 +9,12 @@ public partial class PizzasForm : Tab<Pizza>
     private PizzaBaseRepository _baseRepo;
     private IngredientRepository _ingredientRepo;
     private PizzaRepository _repo;
-    public PizzasForm(PizzaRepository repo, PizzaBaseRepository baseRepo, IngredientRepository ingredientRepo) : base(repo, "Пиццы")
+    private PizzaCrustRepository _pizzaCrustRepo;
+    public PizzasForm(PizzaRepository repo, PizzaBaseRepository baseRepo, IngredientRepository ingredientRepo, PizzaCrustRepository pizzaCrustRepo) : base(repo, "Пиццы")
     {
         _baseRepo = baseRepo;
         _ingredientRepo = ingredientRepo;
+        _pizzaCrustRepo = pizzaCrustRepo;
         _repo = repo;
     }
     
@@ -20,13 +23,13 @@ public partial class PizzasForm : Tab<Pizza>
         var selected = listBox.SelectedItem as Pizza;
         if (selected == null) return;
 
-        using var form = new EditPizzaForm(selected, _baseRepo, _ingredientRepo);
+        using var form = new EditPizzaForm(selected, _baseRepo, _ingredientRepo, _pizzaCrustRepo);
         if (form.ShowDialog() == DialogResult.OK)
         {
             var updated = form.GetResult();
             try
             {
-                _repo.Update(selected.Name, updated.Text, updated.pizzaBase, updated.List);
+                _repo.Update(selected.Name, updated.Text, updated.pizzaBase, updated.pizzaCrust, updated.List);
             }
             catch (Exception ex)
             {
@@ -38,7 +41,7 @@ public partial class PizzasForm : Tab<Pizza>
     
     protected override void AddButton_Click(object sender, EventArgs e)
     {
-        using var form = new AddPizzaForm(_baseRepo, _ingredientRepo);
+        using var form = new AddPizzaForm(_baseRepo, _ingredientRepo, _pizzaCrustRepo);
         if (form.ShowDialog() == DialogResult.OK)
         {
             var newPizza = form.GetResult();
