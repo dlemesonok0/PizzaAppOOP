@@ -6,6 +6,8 @@ namespace WinFormsApp1.forms;
 public partial class EditPizzaCrustForm : EditForm<PizzaCrust>
 {
     private readonly PizzaRepository _pizzaRepository;
+    private readonly IngredientRepository _ingredientRepo;
+    
     private readonly PizzaCrust _crust;
     
     private TextBox _nameTextBox;
@@ -13,7 +15,9 @@ public partial class EditPizzaCrustForm : EditForm<PizzaCrust>
     private ComboBox _modeComboBox;
     private CheckedListBox _pizzasCheckedList;
     
-    public EditPizzaCrustForm(PizzaCrust crust, PizzaRepository repo)
+    private CheckedListBox _ingredientsCheckedList;
+    
+    public EditPizzaCrustForm(PizzaCrust crust, PizzaRepository repo, IngredientRepository ingredientRepo)
     {
         EntityName = crust.Name;
         EntityCost = crust.Cost;
@@ -21,6 +25,7 @@ public partial class EditPizzaCrustForm : EditForm<PizzaCrust>
         
         _crust = crust;
         _pizzaRepository = repo;
+        _ingredientRepo = ingredientRepo;
 
         InitializeComponent();
         LoadData();
@@ -30,7 +35,7 @@ public partial class EditPizzaCrustForm : EditForm<PizzaCrust>
     {
         Controls.Clear();
         Text = "Редактировать бортик";
-        Width = 400;
+        Width = 700;
         Height = 500;
         StartPosition = FormStartPosition.CenterParent;
         FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -45,15 +50,13 @@ public partial class EditPizzaCrustForm : EditForm<PizzaCrust>
             Width = 200
         };
 
-        var costLabel = new Label { Text = "Стоимость:", Left = 20, Top = 60 };
-        _costNumericUpDown = new NumericUpDown
+        var ingredientsLabel = new Label { Text = "Ингредиенты:", Left = 400, Top = 100 };
+        _ingredientsCheckedList = new CheckedListBox
         {
-            Left = 120,
-            Top = 60,
-            Width = 100,
-            DecimalPlaces = 2,
-            Minimum = 0,
-            Maximum = 1000
+            Left = 400,
+            Top = 130,
+            Width = 180,
+            Height = 200
         };
 
         var modeLabel = new Label { Text = "Режим совместимости:", Left = 20, Top = 100 };
@@ -88,8 +91,8 @@ public partial class EditPizzaCrustForm : EditForm<PizzaCrust>
 
         Controls.Add(nameLabel);
         Controls.Add(_nameTextBox);
-        Controls.Add(costLabel);
-        Controls.Add(_costNumericUpDown);
+        Controls.Add(ingredientsLabel);
+        Controls.Add(_ingredientsCheckedList);
         Controls.Add(modeLabel);
         Controls.Add(_modeComboBox);
         Controls.Add(pizzasLabel);
@@ -101,19 +104,22 @@ public partial class EditPizzaCrustForm : EditForm<PizzaCrust>
     private void LoadData()
     {
         _nameTextBox.Text = _crust.Name;
-        _costNumericUpDown.Value = _crust.Cost;
-
+        
         _modeComboBox.SelectedIndex = _crust.UseWhiteList ? 0 : 1;
         
         foreach (var pizza in _pizzaRepository.GetAll())
         {
             _pizzasCheckedList.Items.Add(pizza, _crust.Compatibility.Any(i => i.Name == pizza.Name));
         }
+        foreach (var ingredient in _ingredientRepo.GetAll())
+        {
+            _ingredientsCheckedList.Items.Add(ingredient, _crust.Ingredients.Any(i => i.Name == ingredient.Name));
+        }
     }
 
-    public (string Text, decimal Value, List<Pizza> List, bool Mode) GetResult()
+    public (string Text, List<Ingredient> Ingredients, List<Pizza> List, bool Mode) GetResult()
     {
-        return DialogResult == DialogResult.OK ? (EntityName, EntityCost, EntityList, EntityMode) : (null, 0, [], false);
+        return DialogResult == DialogResult.OK ? (EntityName, EntityIngredients, EntityList, EntityMode) : (null, null, [], false);
     }
 
     private bool EntityMode
@@ -130,6 +136,22 @@ public partial class EditPizzaCrustForm : EditForm<PizzaCrust>
                 if (_pizzasCheckedList.GetItemChecked(i))
                 {
                     selectedIngredients.Add((Pizza)_pizzasCheckedList.Items[i]);
+                }
+            }
+            return selectedIngredients;
+        }
+    }
+    
+    private List<Ingredient> EntityIngredients
+    {
+        get
+        {
+            var selectedIngredients = new List<Ingredient>();
+            for (int i = 0; i < _ingredientsCheckedList.Items.Count; i++)
+            {
+                if (_ingredientsCheckedList.GetItemChecked(i))
+                {
+                    selectedIngredients.Add((Ingredient)_ingredientsCheckedList.Items[i]);
                 }
             }
             return selectedIngredients;

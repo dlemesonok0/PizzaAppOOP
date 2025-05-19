@@ -119,3 +119,4 @@ public partial class AddPizzaForm : AddForm<Pizza>
             return Result;
         }
     }
+    // TODO: переписать, чтобы возвращала поля, а не объект

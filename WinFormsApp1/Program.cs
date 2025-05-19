@@ -42,9 +42,9 @@ static class Program
         pizzaRepo.Add(new Pizza("Маргарита", classicBase, [mozzarella]));
         pizzaRepo.Add(new Pizza("Гавайская", classicBase, [mozzarella, ham, mushrooms]));
         
-        pizzaCrustRepo.Add(new PizzaCrust("Сырный", 30, [pizzaRepo.GetByName("Пепперони")], true));
-        pizzaCrustRepo.Add(new PizzaCrust("Острый", 50, [pizzaRepo.GetByName("Маргарита"), pizzaRepo.GetByName("Пепперони")], false));
-        pizzaCrustRepo.Add(new PizzaCrust("Вегетарианский", 40, [pizzaRepo.GetByName("Маргарита"), pizzaRepo.GetByName("Пепперони"), pizzaRepo.GetByName("Гавайская")], true));
+        pizzaCrustRepo.Add(new PizzaCrust("Сырный", [mozzarella, pepperoni], [pizzaRepo.GetByName("Пепперони")], true));
+        pizzaCrustRepo.Add(new PizzaCrust("Острый", [mozzarella, ham], [pizzaRepo.GetByName("Маргарита"), pizzaRepo.GetByName("Пепперони")], false));
+        pizzaCrustRepo.Add(new PizzaCrust("Вегетарианский", [mushrooms, pepperoni], [pizzaRepo.GetByName("Маргарита"), pizzaRepo.GetByName("Пепперони"), pizzaRepo.GetByName("Гавайская")], true));
 
         Application.Run(new MainForm(ingredientRepo, pizzaBaseRepo, pizzaRepo, pizzaCrustRepo));
     }

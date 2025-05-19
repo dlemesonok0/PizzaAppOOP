@@ -8,11 +8,13 @@ namespace WinFormsApp1;
 public partial class PizzaCrustForm : Tab<PizzaCrust>
 {
     protected PizzaCrustRepository _repo; 
-    public PizzaRepository _pizzaRepository;
-    public PizzaCrustForm(PizzaCrustRepository repo, PizzaRepository pizzaRepository) : base(repo, "Бортики")
+    private PizzaRepository _pizzaRepository;
+    private IngredientRepository _ingredientRepository;
+    public PizzaCrustForm(PizzaCrustRepository repo, PizzaRepository pizzaRepository, IngredientRepository ingredientRepository) : base(repo, "Бортики")
     {
         _repo = repo;
         _pizzaRepository = pizzaRepository;
+        _ingredientRepository = ingredientRepository;
     }
 
     protected override void EditButton_Click(object sender, EventArgs e)
@@ -20,13 +22,13 @@ public partial class PizzaCrustForm : Tab<PizzaCrust>
         var selected = listBox.SelectedItem as PizzaCrust;
         if (selected == null) return;
 
-        using var form = new EditPizzaCrustForm(selected, _pizzaRepository);
+        using var form = new EditPizzaCrustForm(selected, _pizzaRepository, _ingredientRepository);
         if (form.ShowDialog() == DialogResult.OK)
         {
             var updated = form.GetResult();
             try
             {
-                _repo.Update(selected.Name, updated.Text, updated.Value, updated.List, updated.Mode);
+                _repo.Update(selected.Name, updated.Text, updated.Ingredients, updated.List, updated.Mode);
             }
             catch (Exception ex)
             {
@@ -38,13 +40,13 @@ public partial class PizzaCrustForm : Tab<PizzaCrust>
 
     protected override void AddButton_Click(object sender, EventArgs e)
     {
-        using var form = new AddPizzaCrustForm(_pizzaRepository);
+        using var form = new AddPizzaCrustForm(_pizzaRepository, _ingredientRepository);
         if (form.ShowDialog() == DialogResult.OK)
         {
             var newIngredient = form.GetResult();
             try
             {
-                _repo.Add(newIngredient.Text, newIngredient.Value);
+                _repo.Add(newIngredient.Text, newIngredient.Ingredients, newIngredient.List, newIngredient.Mode);
             }
             catch (Exception ex)
             {
