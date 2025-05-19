@@ -54,6 +54,22 @@
       <Compile Update="ui\forms\AddPizzaCrustForm.cs">
         <SubType>Form</SubType>
       </Compile>
+      <Compile Update="ui\Administration.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\EditOrderForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\Tabs\OrderForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\EditOrderItemForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="logic\admin\" />
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 using WinFormsApp1.logic.repositories;
+using WinFormsApp1.logic.user;
 using WinFormsApp1.repositories;
 
 namespace WinFormsApp1;
@@ -9,36 +10,32 @@ public partial class MainForm : Form
     private readonly PizzaBaseRepository _baseRepo;
     private readonly PizzaRepository _pizzaRepo;
     private readonly PizzaCrustRepository _pizzaCrustRepo;
+    private readonly OrderRepository _orderRepo;
 
-    public MainForm(IngredientRepository ingredientRepo, PizzaBaseRepository baseRepo, PizzaRepository pizzaRepo, PizzaCrustRepository pizzaCrustRepo)
+    public MainForm(IngredientRepository ingredientRepo, PizzaBaseRepository baseRepo, PizzaRepository pizzaRepo, PizzaCrustRepository pizzaCrustRepo, OrderRepository orderRepo)
     {
         InitializeUI();
         _ingredientRepo = ingredientRepo;
         _baseRepo = baseRepo;
         _pizzaRepo = pizzaRepo;
         _pizzaCrustRepo = pizzaCrustRepo;
+        _orderRepo = orderRepo;
     }
 
     private void InitializeUI()
     {
-        Text = "Управление пиццами";
+        Text = "PizzaApp";
         Width = 300;
         Height = 200;
 
-        Button btnIngredients = new Button { Text = "Ингредиенты", Dock = DockStyle.Top };
-        Button btnBases = new Button { Text = "Основы", Dock = DockStyle.Top };
-        Button btnPizzas = new Button { Text = "Пиццы", Dock = DockStyle.Top };
-        Button btnCrusts = new Button { Text = "Бортики", Dock = DockStyle.Top };
+        Button btnAdmin = new Button { Text = "Админка", Dock = DockStyle.Top };
+        Button btnUser = new Button { Text = "Юзер экспириенс", Dock = DockStyle.Top };
+       
 
-        btnIngredients.Click += (s, e) => OpenForm(new IngredientsForm(_ingredientRepo));
-        btnBases.Click += (s, e) => OpenForm(new PizzaBasesForm(_baseRepo));
-        btnPizzas.Click += (s, e) => OpenForm(new PizzasForm(_pizzaRepo, _baseRepo, _ingredientRepo, _pizzaCrustRepo));
-        btnCrusts.Click += (s, e) => OpenForm(new PizzaCrustForm(_pizzaCrustRepo, _pizzaRepo, _ingredientRepo));
-            
-        Controls.Add(btnIngredients);
-        Controls.Add(btnBases);
-        Controls.Add(btnPizzas);
-        Controls.Add(btnCrusts);
+        btnAdmin.Click += (sender, args) => OpenForm(new Administration(_ingredientRepo, _baseRepo, _pizzaRepo, _pizzaCrustRepo));
+        btnUser.Click += (sender, args) => OpenForm(new OrdersForm(_orderRepo, _pizzaRepo, _pizzaCrustRepo, new OrderService(_orderRepo)));
+        Controls.Add(btnAdmin);
+        Controls.Add(btnUser);
     }
 
     private void OpenForm(Form form)
