@@ -42,4 +42,19 @@ public class PizzaCrust : BaseEntity
         string mode = UseWhiteList ? "whiteList" : "blackList";
         return $"{Name} - ({Cost:C}) : CompabilityMode: {mode}, IngredientList: {string.Join(" ", Ingredients)}";
     }
+
+    public override BaseEntity Clone()
+    {
+        List<Ingredient> ingredients = new List<Ingredient>();
+        foreach (var ingredient in Ingredients)
+        {
+            ingredients.Add(ingredient.Clone() as Ingredient);
+        }
+        List<Pizza> compatibility = new List<Pizza>();
+        foreach (var elem in Compatibility)
+        {
+            compatibility.Add(elem.Clone() as Pizza);
+        }
+        return new PizzaCrust(Name, ingredients, compatibility, UseWhiteList);
+    }
 }

@@ -10,4 +10,9 @@ public class PizzaBase : BaseEntity
             throw new ArgumentException("You cannot change the classic base name.");
         base.Update(newName, newCost);
     }
+
+    public override BaseEntity Clone()
+    {
+        return new PizzaBase(Name, Cost);
+    }
 }

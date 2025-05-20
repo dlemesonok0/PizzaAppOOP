@@ -30,4 +30,6 @@ public abstract class BaseEntity {
     {
         return $"{Name} - ({Cost:C})";
     }
+
+    public abstract BaseEntity Clone();
 }

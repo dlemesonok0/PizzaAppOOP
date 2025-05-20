@@ -91,6 +91,10 @@ public partial class EditOrderForm : Form
             {
                 Left = 120,
                 Top = 340,
+                Width = 200,
+                Format = DateTimePickerFormat.Custom,
+                CustomFormat = "yyyy-MM-dd HH:mm",
+                ShowUpDown = true, 
                 Enabled = false
             };
 
@@ -122,16 +126,7 @@ public partial class EditOrderForm : Form
             if (_order.ScheduledTime.HasValue)
                 datePicker.Value = _order.ScheduledTime.Value;
 
-            RefreshOrderItems();
-        }
-
-        private void RefreshOrderItems()
-        {
-            itemsListBox.Items.Clear();
-            foreach (var item in _order.Items)
-            {
-                itemsListBox.Items.Add($"{item.Pizza.Name} ({item.SizePizza}");
-            }
+            itemsListBox.DataSource = new BindingSource { DataSource = _order.Items };
         }
 
         private void AddPizzaButton_Click(object sender, EventArgs e)
@@ -141,7 +136,7 @@ public partial class EditOrderForm : Form
             {
                 var item = form.Result;
                 _order.AddItem(item);
-                RefreshOrderItems();
+                itemsListBox.DataSource = new BindingSource { DataSource = _order.Items };
             }
         }
 
@@ -151,7 +146,7 @@ public partial class EditOrderForm : Form
             if (index >= 0 && index < _order.Items.Count)
             {
                 _order.Items.RemoveAt(index);
-                RefreshOrderItems();
+                itemsListBox.DataSource = new BindingSource { DataSource = _order.Items };
             }
         }
 
@@ -165,7 +160,7 @@ public partial class EditOrderForm : Form
                     scheduledCheckBox.Checked ? datePicker.Value : (DateTime?)null
                 );
 
-                _orderService.UpdateOrder(_order);
+                // _orderService.UpdateOrder(_order);
 
                 DialogResult = DialogResult.OK;
                 Close();

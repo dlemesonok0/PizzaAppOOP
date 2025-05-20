@@ -12,8 +12,12 @@ public class Order : BaseEntity
     public List<OrderItem> Items { get; set; } = new();
     
     public override decimal Cost => Items.Sum(i => i.Cost);
-    
-    public bool IsWaiting => ScheduledTime.HasValue && ScheduledTime.Value < DateTime.Now;
+    public override BaseEntity Clone()
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool IsWaiting => ScheduledTime.HasValue;
 
     public Order(string name) : base(name, 0)
     {
@@ -26,6 +30,10 @@ public class Order : BaseEntity
         base.Update(name, 0);
         Comment = comment;
         ScheduledTime = scheduledTime;
+        if (ScheduledTime != null && ScheduledTime.Value <= DateTime.Now)
+        {
+            throw new Exception("Отложенная доставка доступна только на будущее, пока в прошлое перемещать не умеем.");
+        }
     }
 
     public void AddItem(OrderItem item)

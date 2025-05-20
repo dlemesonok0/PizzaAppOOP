@@ -30,4 +30,9 @@ public class OrderService
     {
         _repo.Update(order.Name, order);
     }
+
+    public void AddOrder(Order order)
+    {
+        _repo.Add(order);
+    }
 }
