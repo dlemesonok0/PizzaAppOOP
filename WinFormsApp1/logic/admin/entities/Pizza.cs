@@ -5,7 +5,7 @@ namespace WinFormsApp1;
 public class Pizza : BaseEntity
 {
     public PizzaBase Base { get; private set; }
-    public List<Ingredient> PizzaIngredients { get; protected set; }
+    public virtual List<Ingredient> PizzaIngredients { get; protected set; }
     
     public PizzaCrust? Crust { get; protected set; }
 
