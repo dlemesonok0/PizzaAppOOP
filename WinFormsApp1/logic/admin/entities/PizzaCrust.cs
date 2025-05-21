@@ -33,8 +33,8 @@ public class PizzaCrust : BaseEntity
 
     public bool IsCompatibleWith(Pizza pizza)
     {
-        if (UseWhiteList) return !Compatibility.Any(c => c.Id == pizza.Id);
-        return Compatibility.Any(c => c.Id == pizza.Id);
+        if (UseWhiteList) return Compatibility.Any(c => c.Id == pizza.Id);
+        return !Compatibility.Any(c => c.Id == pizza.Id);
     }
 
     public override string ToString()
@@ -43,7 +43,7 @@ public class PizzaCrust : BaseEntity
         return $"{Name} - ({Cost:C}) : CompabilityMode: {mode}, IngredientList: {string.Join(" ", Ingredients)}";
     }
 
-    public override BaseEntity Clone()
+    public override PizzaCrust Clone()
     {
         List<Ingredient> ingredients = new List<Ingredient>();
         foreach (var ingredient in Ingredients)

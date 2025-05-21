@@ -1,4 +1,5 @@
 using WinFormsApp1.forms;
+using WinFormsApp1.logic.admin.specification;
 using WinFormsApp1.repositories;
 
 namespace WinFormsApp1;
@@ -44,6 +45,16 @@ public partial class IngredientsForm : Tab<Ingredient>
             {
                 MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            LoadData();
+        }
+    }
+    
+    protected override void FilterButton_Click(object sender, EventArgs e)
+    {
+        using var form = new IngredientFilterForm();
+        if (form.ShowDialog() == DialogResult.OK)
+        {
+            Specification = form.GetSpecification();
             LoadData();
         }
     }

@@ -53,7 +53,7 @@ public partial class AddPizzaItemForm : AddPizzaForm
         }
         try
         {
-            Result = new OrderItem(new Pizza(EntityName, pizzaBase, pizzaCrust, selectedIngredients), pizzaCrust, selectedSize, false);
+            Result = new OrderItem(new Pizza(EntityName, pizzaBase, pizzaCrust, selectedIngredients), pizzaCrust.Clone(), selectedSize, false);
         }
         catch (Exception ex)
         {

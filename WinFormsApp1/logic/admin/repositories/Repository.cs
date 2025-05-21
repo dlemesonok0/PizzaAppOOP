@@ -1,4 +1,5 @@
 using WinFormsApp1.factories;
+using WinFormsApp1.logic.admin.specification;
 using WinFormsApp1.repositories;
 
 namespace WinFormsApp1.logic.repositories;
@@ -66,4 +67,7 @@ public abstract class Repository<T> : IRepository<T> where T : BaseEntity
     {
         return _items;
     }
+    
+    public List<T> Find(ISpecification<T> specification) =>
+        _items.Where(i => specification.IsSatisfiedBy(i)).ToList();
 }

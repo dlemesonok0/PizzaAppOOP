@@ -74,7 +74,7 @@ public class Pizza : BaseEntity
         return $"{Name} - ({Cost:C}) : PizzaCrust: {Crust}, PizzaBase: {Base}, PizzaIngredients: {string.Join(" ", PizzaIngredients)}";
     }
 
-    public override BaseEntity Clone()
+    public override Pizza Clone()
     {
         List<Ingredient> ingredients = new List<Ingredient>();
         foreach (var ingredient in PizzaIngredients)

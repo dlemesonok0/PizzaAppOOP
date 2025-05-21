@@ -105,13 +105,7 @@ public partial class EditOrderItemForm : Form
                 return;
             }
 
-            // if (selectedCrust != null && !selectedCrust.IsCompatibleWith(selectedPizza))
-            // {
-            //     MessageBox.Show("Этот бортик несовместим с выбранной пиццей");
-            //     return;
-            // }
-
-            Result = new OrderItem(selectedPizza, selectedCrust, selectedSize, duplicate);
+            Result = new OrderItem(selectedPizza.Clone(), (selectedCrust == null) ? selectedCrust.Clone() : null, selectedSize, duplicate);
             DialogResult = DialogResult.OK;
             Close();
         }

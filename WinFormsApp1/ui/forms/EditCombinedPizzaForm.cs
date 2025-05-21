@@ -88,7 +88,7 @@ public partial class EditCombinedPizzaForm : Form
                 Width = 200,
                 DropDownStyle = ComboBoxStyle.DropDownList
             };
-            crustComboBox.Items.Add("Без бортика");
+            crustComboBox.Items.Add("Без общего бортика");
             foreach (var crust in _crustRepo.GetAll())
             {
                 crustComboBox.Items.Add(crust);
@@ -139,7 +139,6 @@ public partial class EditCombinedPizzaForm : Form
             Controls.Add(crustComboBox);
             Controls.Add(selectLabel);
             Controls.Add(availablePizzasCheckedList);
-            // Controls.Add(selectedPartsListBox);
             Controls.Add(saveButton);
             Controls.Add(cancelButton);
             Controls.Add(sizeLabel);
@@ -174,14 +173,14 @@ public partial class EditCombinedPizzaForm : Form
             var selectedPizzas = new List<Pizza>();
             foreach (var item in availablePizzasCheckedList.CheckedItems)
             {
-                selectedPizzas.Add((Pizza)item);
+                selectedPizzas.Add(((Pizza)item).Clone());
             }
             
             var selectedBase = (PizzaBase)baseComboBox.SelectedItem;
             
             var selectedCrust = crustComboBox.SelectedItem as PizzaCrust;
             
-            Pizza.Update(nameTextBox.Text, selectedPizzas, selectedBase, selectedCrust);
+            Pizza.Update(nameTextBox.Text, selectedPizzas, selectedBase.Clone(), selectedCrust.Clone());
             DialogResult = DialogResult.OK;
             Close();
         }

@@ -11,7 +11,7 @@ public class PizzaBase : BaseEntity
         base.Update(newName, newCost);
     }
 
-    public override BaseEntity Clone()
+    public override PizzaBase Clone()
     {
         return new PizzaBase(Name, Cost);
     }

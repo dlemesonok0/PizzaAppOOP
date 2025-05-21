@@ -34,5 +34,8 @@ public abstract class BaseEntity {
         return $"{Name} - ({Cost:C})";
     }
 
-    public abstract BaseEntity Clone();
+    public virtual BaseEntity Clone()
+    {
+        throw new NotImplementedException("Метод Clone должен быть переопределен в производном классе.");
+    }
 }

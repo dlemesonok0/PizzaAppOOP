@@ -8,7 +8,7 @@ public class OrderItem : BaseEntity
 
     public OrderItem(Pizza pizza, PizzaCrust pizzaCrust, SizePizza sizePizza, bool duplicateIngredients) : base("order", 0)
     {
-        Pizza = pizza.Clone() as Pizza;
+        Pizza = pizza.Clone();
         if (pizzaCrust != null)
             Pizza.EditCrust(pizzaCrust.Clone() as PizzaCrust);
         SizePizza = sizePizza;
@@ -27,7 +27,7 @@ public class OrderItem : BaseEntity
 
     public override string ToString()
     {
-        return $"Pizza: {Pizza.Name}, Size: {SizePizza}, Cost: {Cost:C}";
+        return $"Pizza: {Pizza.Name}, PizzaCrust: {Pizza.Crust} Size: {SizePizza}, Cost: {Cost:C}";
     }
 
     public override BaseEntity Clone()

@@ -78,6 +78,21 @@
       <Compile Update="ui\forms\AddPizzaItemForm.cs">
         <SubType>Form</SubType>
       </Compile>
+      <Compile Update="ui\forms\IngredientFilterForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\OrderFilterForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\BaseFilterForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\CrustFilterForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\PizzaFilterForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>

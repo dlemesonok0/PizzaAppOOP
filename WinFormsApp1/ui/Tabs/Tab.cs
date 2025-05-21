@@ -1,4 +1,5 @@
 using WinFormsApp1.forms;
+using WinFormsApp1.logic.admin.specification;
 using WinFormsApp1.logic.repositories;
 using WinFormsApp1.repositories;
 
@@ -9,6 +10,8 @@ public abstract partial class Tab<T> : Form where T : BaseEntity
     protected Repository<T> _repo;
     protected ListBox listBox;
     
+    protected ISpecification<T> Specification;
+    
     public Tab(Repository<T> repo, string tabName)
     {
         InitializeComponent(tabName);
@@ -18,7 +21,11 @@ public abstract partial class Tab<T> : Form where T : BaseEntity
 
     protected void LoadData()
     {
-        listBox.DataSource = new BindingSource { DataSource = _repo.GetAll() };
+        var data = Specification == null 
+            ? _repo.GetAll() 
+            : _repo.Find(Specification).ToList();
+        
+        listBox.DataSource = new BindingSource { DataSource = data };
     }
 
     private void InitializeComponent(string tabName)
@@ -44,6 +51,11 @@ public abstract partial class Tab<T> : Form where T : BaseEntity
         addButton.Click += AddButton_Click;
         editButton.Click += EditButton_Click;
         deleteButton.Click += DeleteButton_Click;
+        
+        var filterButton = new Button { Text = "Фильтр", Dock = DockStyle.Right };
+        filterButton.Click += FilterButton_Click;
+
+        Controls.Add(filterButton);
     }
     
     protected abstract void EditButton_Click(object sender, EventArgs e);
@@ -63,4 +75,6 @@ public abstract partial class Tab<T> : Form where T : BaseEntity
         }
         LoadData();
     }
+    
+    protected abstract void FilterButton_Click(object sender, EventArgs e);
 }

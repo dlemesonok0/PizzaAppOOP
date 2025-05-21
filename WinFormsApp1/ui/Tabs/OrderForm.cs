@@ -68,4 +68,14 @@ public partial class OrdersForm : Tab<Order>
             MessageBox.Show($"Ошибка удаления: {ex.Message}");
         }
     }
+
+    protected override void FilterButton_Click(object sender, EventArgs e)
+    {
+        using var form = new OrderFilterForm();
+        if (form.ShowDialog() == DialogResult.OK)
+        {
+            Specification = form.GetSpecification();
+            LoadData();
+        }
+    }
 }

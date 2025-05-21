@@ -64,4 +64,14 @@ public partial class PizzaBasesForm : Tab<PizzaBase>
         }
         LoadData();
     }
+    protected override void FilterButton_Click(object sender, EventArgs e)
+    {
+        using var form = new BaseFilterForm();
+        if (form.ShowDialog() == DialogResult.OK)
+        {
+            Specification = form.GetSpecification();
+            LoadData();
+        }
+    }
+    
 }

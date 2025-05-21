@@ -55,4 +55,14 @@ public partial class PizzaCrustForm : Tab<PizzaCrust>
             LoadData();
         }
     }
+    
+    protected override void FilterButton_Click(object sender, EventArgs e)
+    {
+        using var form = new CrustFilterForm();
+        if (form.ShowDialog() == DialogResult.OK)
+        {
+            Specification = form.GetSpecification();
+            LoadData();
+        }
+    }
 }
