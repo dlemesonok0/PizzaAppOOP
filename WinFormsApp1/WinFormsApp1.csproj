@@ -18,79 +18,79 @@
       <Compile Update="ui\Tabs\PizzasForm.cs">
         <SubType>Form</SubType>
       </Compile>
-      <Compile Update="ui\forms\EditForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="ui\forms\EditIngredientForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="ui\forms\AddForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="ui\forms\AddIngredientForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="ui\forms\AddPizzaBaseForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="ui\forms\EditPizzaBaseForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
       <Compile Update="ui\Tabs\Tab.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="ui\forms\EditPizzaForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="ui\forms\AddPizzaForm.cs">
         <SubType>Form</SubType>
       </Compile>
       <Compile Update="ui\Tabs\PizzaCrustForm.cs">
         <SubType>Form</SubType>
       </Compile>
-      <Compile Update="ui\forms\EditPizzaCrustForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="ui\forms\AddPizzaCrustForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
       <Compile Update="ui\Administration.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="ui\forms\EditOrderForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="ui\Tabs\OrderForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="ui\forms\EditOrderItemForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="ui\forms\AddOrderForm.cs">
-        <SubType>Form</SubType>
-      </Compile>
-      <Compile Update="ui\forms\EditCombinedPizzaForm.cs">
         <SubType>Form</SubType>
       </Compile>
       <Compile Update="ui\forms\SelectPizzaTypeForm.cs">
         <SubType>Form</SubType>
       </Compile>
-      <Compile Update="ui\forms\AddPizzaItemForm.cs">
+      <Compile Update="ui\forms\addForms\AddForm.cs">
         <SubType>Form</SubType>
       </Compile>
-      <Compile Update="ui\forms\IngredientFilterForm.cs">
+      <Compile Update="ui\forms\addForms\AddIngredientForm.cs">
         <SubType>Form</SubType>
       </Compile>
-      <Compile Update="ui\forms\OrderFilterForm.cs">
+      <Compile Update="ui\forms\addForms\AddOrderForm.cs">
         <SubType>Form</SubType>
       </Compile>
-      <Compile Update="ui\forms\BaseFilterForm.cs">
+      <Compile Update="ui\forms\addForms\AddPizzaBaseForm.cs">
         <SubType>Form</SubType>
       </Compile>
-      <Compile Update="ui\forms\CrustFilterForm.cs">
+      <Compile Update="ui\forms\addForms\AddPizzaCrustForm.cs">
         <SubType>Form</SubType>
       </Compile>
-      <Compile Update="ui\forms\PizzaFilterForm.cs">
+      <Compile Update="ui\forms\addForms\AddPizzaForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\addForms\AddPizzaItemForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\filterForms\BaseFilterForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\filterForms\CrustFilterForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\filterForms\IngredientFilterForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\filterForms\PizzaFilterForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\filterForms\OrderFilterForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\editForms\EditCombinedPizzaForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\editForms\EditForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\editForms\EditIngredientForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\editForms\EditOrderForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\editForms\EditOrderItemForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\editForms\EditPizzaBaseForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\editForms\EditPizzaCrustForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\forms\editForms\EditPizzaForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="ui\OrderForm.cs">
         <SubType>Form</SubType>
       </Compile>
     </ItemGroup>

@@ -4,11 +4,9 @@ using WinFormsApp1.logic.user;
 using WinFormsApp1.repositories;
 
 namespace WinFormsApp1;
-//TODO: почистить
 
 public partial class OrdersForm : Tab<Order>
 {
-    private readonly OrderService _orderService;
     private readonly PizzaRepository _pizzaRepo;
     private readonly PizzaCrustRepository _pizzaCrustRepo;
     private readonly PizzaBaseRepository _pizzaBaseRepo;
@@ -20,11 +18,9 @@ public partial class OrdersForm : Tab<Order>
         PizzaRepository pizzaRepo, 
         PizzaCrustRepository crustRepo,
         PizzaBaseRepository pizzaBaseRepo,
-        IngredientRepository ingredientRepo,
-        OrderService orderService) : base(repo, "Заказы")
+        IngredientRepository ingredientRepo) : base(repo, "Заказы")
     {
         _repo = repo;
-        _orderService = orderService;
         _pizzaRepo = pizzaRepo;
         _pizzaCrustRepo = crustRepo;
         _pizzaBaseRepo = pizzaBaseRepo;
@@ -36,7 +32,7 @@ public partial class OrdersForm : Tab<Order>
         var selected = listBox.SelectedItem as Order;
         if (selected == null) return;
 
-        using var form = new EditOrderForm(selected, _pizzaRepo, _pizzaCrustRepo, _pizzaBaseRepo, _ingredientRepo, _orderService);
+        using var form = new EditOrderForm(selected, _pizzaRepo, _pizzaCrustRepo, _pizzaBaseRepo, _ingredientRepo);
         if (form.ShowDialog() == DialogResult.OK)
         {
             LoadData();
@@ -45,7 +41,7 @@ public partial class OrdersForm : Tab<Order>
 
     protected override void AddButton_Click(object sender, EventArgs e)
     {
-        using var form = new EditOrderForm(new Order("Новый заказ"), _pizzaRepo, _pizzaCrustRepo, _pizzaBaseRepo, _ingredientRepo, _orderService);
+        using var form = new EditOrderForm(new Order("Новый заказ"), _pizzaRepo, _pizzaCrustRepo, _pizzaBaseRepo, _ingredientRepo);
         if (form.ShowDialog() == DialogResult.OK)
         {
             _repo.Add(form._order);

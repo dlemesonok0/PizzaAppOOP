@@ -105,7 +105,7 @@ public partial class EditOrderItemForm : Form
                 return;
             }
 
-            Result = new OrderItem(selectedPizza.Clone(), (selectedCrust == null) ? selectedCrust.Clone() : null, selectedSize, duplicate);
+            Result = new OrderItem(selectedPizza.Clone(), (selectedCrust != null) ? selectedCrust.Clone() : null, selectedSize, duplicate);
             DialogResult = DialogResult.OK;
             Close();
         }

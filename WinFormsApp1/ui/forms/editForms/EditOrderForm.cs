@@ -12,7 +12,6 @@ public partial class EditOrderForm : Form
         private readonly PizzaCrustRepository _crustRepo;
         private readonly PizzaBaseRepository _pizzaBaseRepo;
         private readonly IngredientRepository _ingredientRepo;
-        private readonly OrderService _orderService;
 
         private TextBox nameTextBox;
         private ListBox itemsListBox;
@@ -25,13 +24,11 @@ public partial class EditOrderForm : Form
             PizzaRepository pizzaRepo,
             PizzaCrustRepository crustRepo,
             PizzaBaseRepository pizzaBaseRepo,
-            IngredientRepository ingredientRepo,
-            OrderService orderService)
+            IngredientRepository ingredientRepo)
         {
             _order = order ?? throw new ArgumentNullException(nameof(order));
             _pizzaRepo = pizzaRepo ?? throw new ArgumentNullException(nameof(pizzaRepo));
             _crustRepo = crustRepo ?? throw new ArgumentNullException(nameof(crustRepo));
-            _orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
             _pizzaBaseRepo = pizzaBaseRepo ?? throw new ArgumentNullException(nameof(pizzaBaseRepo));
             _ingredientRepo = ingredientRepo ?? throw new ArgumentNullException(nameof(ingredientRepo));
 
@@ -167,8 +164,6 @@ public partial class EditOrderForm : Form
                     commentTextBox.Text,
                     scheduledCheckBox.Checked ? datePicker.Value : (DateTime?)null
                 );
-
-                // _orderService.UpdateOrder(_order);
 
                 DialogResult = DialogResult.OK;
                 Close();

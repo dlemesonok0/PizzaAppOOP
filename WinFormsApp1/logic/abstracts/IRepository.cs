@@ -6,5 +6,6 @@ public interface IRepository<T> where T : class
     void Update(string name, string newName, decimal cost);
     void Delete(string name);
     T? GetByName(string name);
+    T? GetById(Guid id);
     IEnumerable<T> GetAll();
 }
