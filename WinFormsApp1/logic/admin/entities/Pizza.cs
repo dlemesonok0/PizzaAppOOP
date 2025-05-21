@@ -4,7 +4,7 @@ namespace WinFormsApp1;
 
 public class Pizza : BaseEntity
 {
-    public PizzaBase Base { get; private set; }
+    public PizzaBase Base { get; protected set; }
     public virtual List<Ingredient> PizzaIngredients { get; protected set; }
     
     public PizzaCrust? Crust { get; protected set; }
@@ -23,6 +23,7 @@ public class Pizza : BaseEntity
         Base = newPizzaBase;
         PizzaIngredients = [];
         Crust = pizzaCrust;
+        if (ingredients != null)
         foreach (var ingredient in ingredients)
         {
             PizzaIngredients.Add(ingredient);
@@ -59,6 +60,13 @@ public class Pizza : BaseEntity
     public void RemoveIngredient(Ingredient ingredient)
     {
         PizzaIngredients.Remove(ingredient);
+    }
+
+    public void EditCrust(PizzaCrust newCrust)
+    {
+        if (newCrust != null && newCrust.IsCompatibleWith(this))
+            throw new Exception("this crust doesn't fit to this pizza");
+        Crust = newCrust;
     }
 
     public override string ToString()

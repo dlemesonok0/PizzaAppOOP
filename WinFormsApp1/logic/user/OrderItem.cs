@@ -1,14 +1,16 @@
 namespace WinFormsApp1.logic.user;
 
-public class OrderItem
+public class OrderItem : BaseEntity
 {
     public Pizza Pizza { get; set; }
     public SizePizza SizePizza { get; set; }
     public bool DuplicateIngredients { get; set; }
 
-    public OrderItem(Pizza pizza, SizePizza sizePizza, bool duplicateIngredients)
+    public OrderItem(Pizza pizza, PizzaCrust pizzaCrust, SizePizza sizePizza, bool duplicateIngredients) : base("order", 0)
     {
         Pizza = pizza.Clone() as Pizza;
+        if (pizzaCrust != null)
+            Pizza.EditCrust(pizzaCrust.Clone() as PizzaCrust);
         SizePizza = sizePizza;
         DuplicateIngredients = duplicateIngredients;
     }
@@ -26,5 +28,10 @@ public class OrderItem
     public override string ToString()
     {
         return $"Pizza: {Pizza.Name}, Size: {SizePizza}, Cost: {Cost:C}";
+    }
+
+    public override BaseEntity Clone()
+    {
+        throw new NotImplementedException();
     }
 }

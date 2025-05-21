@@ -33,8 +33,8 @@ public class PizzaCrust : BaseEntity
 
     public bool IsCompatibleWith(Pizza pizza)
     {
-        if (UseWhiteList) return !Compatibility.Contains(pizza);
-        return Compatibility.Contains(pizza);
+        if (UseWhiteList) return !Compatibility.Any(c => c.Id == pizza.Id);
+        return Compatibility.Any(c => c.Id == pizza.Id);
     }
 
     public override string ToString()

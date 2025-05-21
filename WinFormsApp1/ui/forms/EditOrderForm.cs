@@ -10,6 +10,8 @@ public partial class EditOrderForm : Form
         public readonly Order _order;
         private readonly PizzaRepository _pizzaRepo;
         private readonly PizzaCrustRepository _crustRepo;
+        private readonly PizzaBaseRepository _pizzaBaseRepo;
+        private readonly IngredientRepository _ingredientRepo;
         private readonly OrderService _orderService;
 
         private TextBox nameTextBox;
@@ -22,12 +24,16 @@ public partial class EditOrderForm : Form
             Order order,
             PizzaRepository pizzaRepo,
             PizzaCrustRepository crustRepo,
+            PizzaBaseRepository pizzaBaseRepo,
+            IngredientRepository ingredientRepo,
             OrderService orderService)
         {
             _order = order ?? throw new ArgumentNullException(nameof(order));
             _pizzaRepo = pizzaRepo ?? throw new ArgumentNullException(nameof(pizzaRepo));
             _crustRepo = crustRepo ?? throw new ArgumentNullException(nameof(crustRepo));
             _orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
+            _pizzaBaseRepo = pizzaBaseRepo ?? throw new ArgumentNullException(nameof(pizzaBaseRepo));
+            _ingredientRepo = ingredientRepo ?? throw new ArgumentNullException(nameof(ingredientRepo));
 
             InitializeComponent();
             LoadData();
@@ -131,11 +137,13 @@ public partial class EditOrderForm : Form
 
         private void AddPizzaButton_Click(object sender, EventArgs e)
         {
-            using var form = new EditOrderItemForm(_pizzaRepo, _crustRepo);
-            if (form.ShowDialog() == DialogResult.OK)
+            using var selectTypeForm = new SelectPizzaTypeForm(_pizzaRepo, _pizzaBaseRepo, _ingredientRepo, _crustRepo);
+            if (selectTypeForm.ShowDialog() == DialogResult.OK)
             {
-                var item = form.Result;
-                _order.AddItem(item);
+                var selectedPizza = selectTypeForm.Result;
+
+                // using var itemForm = new EditOrderItemForm(_pizzaRepo, _crustRepo);
+                _order.AddItem(selectedPizza);
                 itemsListBox.DataSource = new BindingSource { DataSource = _order.Items };
             }
         }

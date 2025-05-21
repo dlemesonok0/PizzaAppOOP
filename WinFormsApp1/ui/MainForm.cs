@@ -33,7 +33,7 @@ public partial class MainForm : Form
        
 
         btnAdmin.Click += (sender, args) => OpenForm(new Administration(_ingredientRepo, _baseRepo, _pizzaRepo, _pizzaCrustRepo));
-        btnUser.Click += (sender, args) => OpenForm(new OrdersForm(_orderRepo, _pizzaRepo, _pizzaCrustRepo, new OrderService(_orderRepo)));
+        btnUser.Click += (sender, args) => OpenForm(new OrdersForm(_orderRepo, _pizzaRepo, _pizzaCrustRepo, _baseRepo, _ingredientRepo, new OrderService(_orderRepo) ));
         Controls.Add(btnAdmin);
         Controls.Add(btnUser);
     }

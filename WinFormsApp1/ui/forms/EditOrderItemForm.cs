@@ -19,7 +19,7 @@ public partial class EditOrderItemForm : Form
     public OrderItem Result { get; private set; }
 
         public EditOrderItemForm(
-            PizzaRepository pizzaRepo,
+            PizzaRepository pizzaRepo, 
             PizzaCrustRepository crustRepo)
         {
             _pizzaRepo = pizzaRepo;
@@ -32,7 +32,6 @@ public partial class EditOrderItemForm : Form
         private void LoadData()
         {
             pizzaComboBox.DataSource = _pizzaRepo.GetAll().ToList();
-            // crustComboBox.DataSource = _crustRepo.GetAll().ToList();
             sizeComboBox.DataSource = Enum.GetValues(typeof(SizePizza));
         }
 
@@ -50,6 +49,16 @@ public partial class EditOrderItemForm : Form
                 Top = 20,
                 Width = 200
             };
+            
+            var crustLabel = new Label { Text = "Бортик:", Left = 20, Top = 60 };
+            crustComboBox = new ComboBox
+            {
+                Left = 120,
+                Top = 60,
+                Width = 200,
+                DropDownStyle = ComboBoxStyle.DropDownList
+            };
+            crustComboBox.DataSource = new BindingSource { DataSource = _crustRepo.GetAll() };
 
             var sizeLabel = new Label { Text = "Размер:", Left = 20, Top = 100 };
             sizeComboBox = new ComboBox
@@ -74,7 +83,7 @@ public partial class EditOrderItemForm : Form
 
             Controls.Add(pizzaLabel);
             Controls.Add(pizzaComboBox);
-            // Controls.Add(crustLabel);
+            Controls.Add(crustLabel);
             Controls.Add(crustComboBox);
             Controls.Add(sizeLabel);
             Controls.Add(sizeComboBox);
@@ -86,7 +95,7 @@ public partial class EditOrderItemForm : Form
         private void SaveButton_Click(object sender, EventArgs e)
         {
             var selectedPizza = (Pizza)pizzaComboBox.SelectedItem;
-            // var selectedCrust = crustComboBox.SelectedItem as PizzaCrust;
+            var selectedCrust = crustComboBox.SelectedItem as PizzaCrust;
             var selectedSize = (SizePizza)sizeComboBox.SelectedItem;
             var duplicate = duplicateCheckBox.Checked;
 
@@ -102,7 +111,7 @@ public partial class EditOrderItemForm : Form
             //     return;
             // }
 
-            Result = new OrderItem(selectedPizza, selectedSize, duplicate);
+            Result = new OrderItem(selectedPizza, selectedCrust, selectedSize, duplicate);
             DialogResult = DialogResult.OK;
             Close();
         }

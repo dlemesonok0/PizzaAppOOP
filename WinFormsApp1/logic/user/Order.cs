@@ -4,7 +4,6 @@ namespace WinFormsApp1.logic.user;
 
 public class Order : BaseEntity
 {
-    public Guid Id { get; set; }
     public DateTime OrderTime { get; set; }
     
     public string Comment { get; set; }

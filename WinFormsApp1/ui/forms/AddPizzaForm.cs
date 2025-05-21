@@ -1,19 +1,22 @@
 using WinFormsApp1.repositories;
 using System.ComponentModel;
 using WinFormsApp1.logic.repositories;
+using WinFormsApp1.logic.user;
 
 namespace WinFormsApp1.forms;
 
 public partial class AddPizzaForm : AddForm<Pizza>
     {
-        private readonly PizzaBaseRepository _baseRepo;
-        private readonly IngredientRepository _ingredientRepo;
-        private readonly PizzaCrustRepository _pizzaCrustRepo;
+        protected readonly PizzaBaseRepository _baseRepo;
+        protected readonly IngredientRepository _ingredientRepo;
+        protected readonly PizzaCrustRepository _pizzaCrustRepo;
 
-        private ComboBox baseComboBox;
-        private CheckedListBox ingredientsCheckedList;
-        private ComboBox crustComboBox;
-
+        protected ComboBox baseComboBox;
+        protected CheckedListBox ingredientsCheckedList;
+        protected ComboBox crustComboBox;
+        protected ComboBox sizeComboBox;
+        public SizePizza SelectedSize;
+        
         public AddPizzaForm(
             PizzaBaseRepository baseRepo,
             IngredientRepository ingredientRepo,
@@ -73,6 +76,15 @@ public partial class AddPizzaForm : AddForm<Pizza>
                 DropDownStyle = ComboBoxStyle.DropDownList
             };
             
+            var sizeLabel = new Label { Text = "Размер:", Left = 20, Top = 340 };
+            sizeComboBox = new ComboBox
+            {
+                Left = 120,
+                Top = 340,
+                Width = 180,
+                DropDownStyle = ComboBoxStyle.DropDownList
+            };
+            
             var saveButton = new Button { Text = "Сохранить", Left = 100, Top = 400, Width = 100 };
             var cancelButton = new Button { Text = "Отмена", Left = 220, Top = 400, Width = 100 };
 
@@ -89,6 +101,8 @@ public partial class AddPizzaForm : AddForm<Pizza>
             Controls.Add(cancelButton);
             Controls.Add(crustLabel);
             Controls.Add(crustComboBox);
+            Controls.Add(sizeLabel);
+            Controls.Add(sizeComboBox);
         }
 
         private void LoadData()
@@ -108,6 +122,9 @@ public partial class AddPizzaForm : AddForm<Pizza>
             
             if (crustComboBox.Items.Count > 0)
                 crustComboBox.SelectedIndex = 0;
+            
+            sizeComboBox.DataSource = Enum.GetValues(typeof(SizePizza));
+            sizeComboBox.SelectedIndex = 1;
         }
 
         protected override void SaveButton_Click(object sender, EventArgs e)
@@ -120,6 +137,8 @@ public partial class AddPizzaForm : AddForm<Pizza>
                     selectedIngredients.Add((Ingredient)ingredientsCheckedList.Items[i]);
                 }
             }
+            
+            var selectedSize = (SizePizza)sizeComboBox.SelectedItem;
 
             var pizzaBase = (PizzaBase)baseComboBox.SelectedItem;
             PizzaCrust pizzaCrust;
