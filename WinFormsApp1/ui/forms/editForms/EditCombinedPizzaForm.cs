@@ -103,14 +103,6 @@ public partial class EditCombinedPizzaForm : Form
                 Width = 300,
                 Height = 150
             };
-
-            // var selectedPartsListBox = new ListBox
-            // {
-            //     Left = 120,
-            //     Top = 330,
-            //     Width = 300,
-            //     Height = 80
-            // };
             
             var addCustomPartButton = new Button { Text = "Создать свою часть", Left = 120, Top = 330, Width = 150 };
             addCustomPartButton.Click += AddCustomPartButton_Click;
@@ -179,9 +171,17 @@ public partial class EditCombinedPizzaForm : Form
             var selectedBase = (PizzaBase)baseComboBox.SelectedItem;
             
             var selectedCrust = crustComboBox.SelectedItem as PizzaCrust;
-            
-            Pizza.Update(nameTextBox.Text, selectedPizzas, selectedBase.Clone(), selectedCrust.Clone());
-            DialogResult = DialogResult.OK;
+
+            try
+            {
+                Pizza.Update(nameTextBox.Text, selectedPizzas, selectedBase.Clone(),
+                    (selectedCrust != null) ? selectedCrust.Clone() : null);
+                DialogResult = DialogResult.OK;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             Close();
         }
 
@@ -190,7 +190,8 @@ public partial class EditCombinedPizzaForm : Form
             using var form = new AddPizzaForm(_pizzaBaseRepo, _ingredientRepo, _crustRepo);
             if (form.ShowDialog() == DialogResult.OK)
             {
-                availablePizzasCheckedList.Items.Add(form.Result);
+                if (form.Result != null)
+                    availablePizzasCheckedList.Items.Add(form.Result);
             }
         }
     }

@@ -2,13 +2,13 @@ namespace WinFormsApp1;
 
 public class PizzaCrust : BaseEntity
 {
-    public List<Ingredient> Ingredients { get; set; }
+    public List<Ingredient> Ingredients { get; private set; }
     public bool UseWhiteList = true;
     public List<Pizza> Compatibility { get; private set; } = new();
     
     public override decimal Cost => Ingredients.Sum(i => i.Cost);
 
-    public PizzaCrust(string name, List<Ingredient> ingredients, List<Pizza> list, bool mode) : base(name, 0)
+    public PizzaCrust(string name, List<Ingredient> ingredients, List<Pizza> list, bool mode, Guid? id = null) : base(name, 0, id)
     {
         if (list == null) 
             throw new ArgumentException("list is null");
@@ -48,13 +48,13 @@ public class PizzaCrust : BaseEntity
         List<Ingredient> ingredients = new List<Ingredient>();
         foreach (var ingredient in Ingredients)
         {
-            ingredients.Add(ingredient.Clone() as Ingredient);
+            ingredients.Add(ingredient.Clone());
         }
         List<Pizza> compatibility = new List<Pizza>();
         foreach (var elem in Compatibility)
         {
-            compatibility.Add(elem.Clone() as Pizza);
+            compatibility.Add(elem.Clone());
         }
-        return new PizzaCrust(Name, ingredients, compatibility, UseWhiteList);
+        return new PizzaCrust(Name, ingredients, compatibility, UseWhiteList, Id);
     }
 }

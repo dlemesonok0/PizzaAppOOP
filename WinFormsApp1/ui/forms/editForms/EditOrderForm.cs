@@ -137,11 +137,16 @@ public partial class EditOrderForm : Form
             using var selectTypeForm = new SelectPizzaTypeForm(_pizzaRepo, _pizzaBaseRepo, _ingredientRepo, _crustRepo);
             if (selectTypeForm.ShowDialog() == DialogResult.OK)
             {
-                var selectedPizza = selectTypeForm.Result;
-
-                // using var itemForm = new EditOrderItemForm(_pizzaRepo, _crustRepo);
-                _order.AddItem(selectedPizza);
-                itemsListBox.DataSource = new BindingSource { DataSource = _order.Items };
+                try
+                {
+                    var selectedPizza = selectTypeForm.Result;
+                    _order.AddItem(selectedPizza);
+                    itemsListBox.DataSource = new BindingSource { DataSource = _order.Items };
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 

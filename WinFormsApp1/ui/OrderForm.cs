@@ -56,7 +56,7 @@ public partial class OrdersForm : Tab<Order>
 
         try
         {
-            _repo.Delete(selected.Name);
+            _repo.Delete(selected.Id);
             LoadData();
         }
         catch (Exception ex)

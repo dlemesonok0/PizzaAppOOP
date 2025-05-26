@@ -2,7 +2,7 @@ namespace WinFormsApp1;
 
 public class PizzaBase : BaseEntity
 {
-    public PizzaBase(string name, decimal cost) : base(name, cost) {}
+    public PizzaBase(string name, decimal cost, Guid? id = null) : base(name, cost, id) {}
 
     public override void Update(string newName, decimal newCost)
     {
@@ -13,6 +13,6 @@ public class PizzaBase : BaseEntity
 
     public override PizzaBase Clone()
     {
-        return new PizzaBase(Name, Cost);
+        return new PizzaBase(Name, Cost, Id);
     }
 }

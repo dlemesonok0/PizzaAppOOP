@@ -43,10 +43,10 @@ public partial class PizzaCrustForm : Tab<PizzaCrust>
         using var form = new AddPizzaCrustForm(_pizzaRepository, _ingredientRepository);
         if (form.ShowDialog() == DialogResult.OK)
         {
-            var newIngredient = form.GetResult();
+            var newCrust = form.GetResult();
             try
             {
-                _repo.Add(newIngredient.Text, newIngredient.Ingredients, newIngredient.List, newIngredient.Mode);
+                _repo.Add(newCrust.Text, newCrust.Ingredients, newCrust.List, newCrust.Mode);
             }
             catch (Exception ex)
             {

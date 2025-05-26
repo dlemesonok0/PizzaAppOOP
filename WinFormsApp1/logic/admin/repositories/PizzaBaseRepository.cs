@@ -17,9 +17,9 @@ public class PizzaBaseRepository : Repository<PizzaBase>
         }
     }
 
-    public virtual void Update(string name, string newName, decimal cost)
+    public virtual void Update(Guid id, string newName, decimal cost)
     {
-        if (name == "Classic")
+        if (GetById(id).Name == "Classic")
         {
             foreach (var other in GetAll().Where(i => i.Name != "Classic"))
             {
@@ -29,12 +29,12 @@ public class PizzaBaseRepository : Repository<PizzaBase>
                 }
             }
         }
-        base.Update(name, newName, cost);
+        base.Update(id, newName, cost);
     }
-    public override void Update(string name, BaseEntity entity)
+    public override void Update(Guid id, BaseEntity entity)
     {
         _factory.Create(entity.Name, entity.Cost);
-        if (name == "Classic")
+        if (GetById(id).Name == "Classic")
         {
             foreach (var other in GetAll().Where(i => i.Name != "Classic"))
             {
@@ -45,13 +45,13 @@ public class PizzaBaseRepository : Repository<PizzaBase>
             }
         }
         
-        base.Update(name, entity);
+        base.Update(id, entity);
     }
 
-    public virtual void Delete(string name)
+    public virtual void Delete(Guid id)
     {
-        if (name == "Classic")
+        if (GetById(id).Name == "Classic")
             throw new ArgumentException("You cannot delete the classic base.");
-        base.Delete(name);
+        base.Delete(id);
     }
 }

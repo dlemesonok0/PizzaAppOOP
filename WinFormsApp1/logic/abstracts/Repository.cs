@@ -16,45 +16,36 @@ public abstract class Repository<T> : IRepository<T> where T : BaseEntity
     
     public void Add(string name, decimal cost)
     {
-        var item = GetByName(name);
-        if (item != null) 
-            throw new KeyNotFoundException($"{item} is present in the repository");
         _items.Add(_factory.Create(name, cost));
     }
     
     public void Add(BaseEntity entity)
     {
-        var item = GetByName(entity.Name);
+        var item = GetById(entity.Id);
         if (item != null) 
             throw new KeyNotFoundException($"{entity} is present in the repository");
         _items.Add(entity as T);
     }
 
-    public virtual void Update(string name, string newName, decimal cost)
+    public virtual void Update(Guid id, string newName, decimal cost)
     {
-        var item = GetByName(name);
+        var item = GetById(id);
         if (item == null) 
-            throw new KeyNotFoundException($"{name} is not present in the repository");
-        item = GetByName(newName);
-        if (item != null  && name != newName)
-            throw new KeyNotFoundException($"{name} is present in the repository");
+            throw new KeyNotFoundException($"{id} is not present in the repository");
         item.Update(newName, cost);
     }
     
-    public virtual void Update(string name, BaseEntity entity)
+    public virtual void Update(Guid id, BaseEntity entity)
     {
-        var item = GetByName(name);
+        var item = GetById(id);
         if (item == null) 
-            throw new KeyNotFoundException($"{name} is not present in the repository");
-        var exist = GetByName(entity.Name);
-        if (exist != null && name != entity.Name)
-            throw new KeyNotFoundException($"{name} is present in the repository");
+            throw new KeyNotFoundException($"{id} is not present in the repository");
         item.Update(entity.Name, entity.Cost);
     }
 
-    public virtual void Delete(string name)
+    public virtual void Delete(Guid id) 
     {
-        _items.Remove(GetByName(name));
+        _items.Remove(GetById(id));
     }
 
     public T? GetById(Guid id)

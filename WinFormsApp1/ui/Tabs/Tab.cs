@@ -67,7 +67,7 @@ public abstract partial class Tab<T> : Form where T : BaseEntity
         if (selected == null) return;
         try
         {
-            _repo.Delete(selected.Name);
+            _repo.Delete(selected.Id);
         }
         catch (Exception ex)
         {

@@ -58,7 +58,10 @@ public partial class EditOrderItemForm : Form
                 Width = 200,
                 DropDownStyle = ComboBoxStyle.DropDownList
             };
-            crustComboBox.DataSource = new BindingSource { DataSource = _crustRepo.GetAll() };
+            // crustComboBox.DataSource = new BindingSource { DataSource = _crustRepo.GetAll() };
+            crustComboBox.Items.Add("Без бортика");
+            foreach (var crust in _crustRepo.GetAll())
+                crustComboBox.Items.Add(crust);
 
             var sizeLabel = new Label { Text = "Размер:", Left = 20, Top = 100 };
             sizeComboBox = new ComboBox
@@ -105,8 +108,16 @@ public partial class EditOrderItemForm : Form
                 return;
             }
 
-            Result = new OrderItem(selectedPizza.Clone(), (selectedCrust != null) ? selectedCrust.Clone() : null, selectedSize, duplicate);
-            DialogResult = DialogResult.OK;
+            try
+            {
+                Result = new OrderItem(selectedPizza.Clone(), (selectedCrust != null) ? selectedCrust.Clone() : null,
+                    selectedSize, duplicate);
+                DialogResult = DialogResult.OK;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             Close();
         }
     }

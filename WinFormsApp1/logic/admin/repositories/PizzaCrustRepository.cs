@@ -7,13 +7,11 @@ public class PizzaCrustRepository : Repository<PizzaCrust>
     protected PizzaCrustFactory _factory;
     public PizzaCrustRepository() : base(new PizzaCrustFactory())
     {
+        _factory = new PizzaCrustFactory();
     }
     
     public void Add(string name, List<Ingredient> ingredients, List<Pizza> pizzas, bool mode)
     {
-        var item = GetByName(name);
-        if (item != null) 
-            throw new KeyNotFoundException($"{item} is present in the repository");
         base.Add(_factory.Create(name, ingredients, pizzas, mode));
     }
     

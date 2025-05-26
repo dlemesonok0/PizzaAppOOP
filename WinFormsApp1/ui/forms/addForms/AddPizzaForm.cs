@@ -152,7 +152,13 @@ public partial class AddPizzaForm : AddForm<Pizza>
             }
             try
             {
-                Result = new Pizza(EntityName, pizzaBase, pizzaCrust, selectedIngredients);
+                var item = new Pizza(EntityName, pizzaBase, pizzaCrust, selectedIngredients);
+                if (pizzaCrust != null && !pizzaCrust.IsCompatibleWith(item))
+                {
+                    throw new Exception("Не подходит, бортик");
+                }
+
+                Result = item;
             }
             catch (Exception ex)
             {
@@ -166,9 +172,8 @@ public partial class AddPizzaForm : AddForm<Pizza>
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public Pizza? Result { get; private set; }
 
-        public new Pizza? GetResult()
-        {
-            return Result;
-        }
+    public new Pizza? GetResult()
+    {
+        return Result;
     }
-    // TODO: переписать, чтобы возвращала поля, а не объект
+}

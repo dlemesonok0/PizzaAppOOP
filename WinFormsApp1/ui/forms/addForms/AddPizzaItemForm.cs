@@ -53,14 +53,15 @@ public partial class AddPizzaItemForm : AddPizzaForm
         }
         try
         {
-            Result = new OrderItem(new Pizza(EntityName, pizzaBase, pizzaCrust, selectedIngredients), pizzaCrust.Clone(), selectedSize, false);
+            Result = new OrderItem(new Pizza(EntityName, pizzaBase, pizzaCrust, selectedIngredients), (pizzaCrust != null) ? pizzaCrust.Clone() : null, selectedSize, false);
+            DialogResult = DialogResult.OK;
         }
         catch (Exception ex)
         {
             MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        DialogResult = DialogResult.OK;
+
         Close();
     }
     

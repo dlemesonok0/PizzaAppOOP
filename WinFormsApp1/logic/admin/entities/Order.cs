@@ -4,11 +4,11 @@ namespace WinFormsApp1.logic.user;
 
 public class Order : BaseEntity
 {
-    public DateTime OrderTime { get; set; }
+    public DateTime OrderTime { get; private set; }
     
-    public string Comment { get; set; }
-    public DateTime? ScheduledTime { get; set; }
-    public List<OrderItem> Items { get; set; } = new();
+    public string Comment { get; private set; }
+    public DateTime? ScheduledTime { get; private set; }
+    public List<OrderItem> Items { get; private set; } = new();
     
     public override decimal Cost => Items.Sum(i => i.Cost);
     public override BaseEntity Clone()
@@ -18,9 +18,8 @@ public class Order : BaseEntity
 
     public bool IsWaiting => ScheduledTime.HasValue;
 
-    public Order(string name) : base(name, 0)
+    public Order(string name, Guid? id = null) : base(name, 0, id)
     {
-        Id = Guid.NewGuid();
         OrderTime = DateTime.Now;
     }
 
@@ -37,7 +36,8 @@ public class Order : BaseEntity
 
     public void AddItem(OrderItem item)
     {
-        Items.Add(item);
+        if (item != null)
+            Items.Add(item);
     }
 
     public void RemoveItem(OrderItem item)

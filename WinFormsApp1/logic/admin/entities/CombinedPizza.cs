@@ -15,12 +15,17 @@ public class CombinedPizza : Pizza
     }
 
     public override decimal Cost => 
-        Parts.Sum(p => p.Cost * 1 / Parts.Count);
+        Parts.Sum(p => p.Cost * 1 / Parts.Count) + Crust.Cost;
     
     public new void Update(string newName, List<Pizza> pizzas, PizzaBase pizzaBase, PizzaCrust crust)
     {
         Name = newName;
         Base = pizzaBase;
+        foreach (var pizza in pizzas)
+        {
+            if (crust != null && !crust.IsCompatibleWith(pizza))
+                throw new Exception("Сорри, бортик не подходит");
+        }
         Crust = crust;
         Parts.Clear();
         Parts = pizzas;

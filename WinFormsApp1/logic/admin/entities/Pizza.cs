@@ -18,7 +18,7 @@ public class Pizza : BaseEntity
             return sum;
         }
     }
-    public Pizza(string name, PizzaBase newPizzaBase, PizzaCrust pizzaCrust, IEnumerable<Ingredient> ingredients) : base(name, 0)
+    public Pizza(string name, PizzaBase newPizzaBase, PizzaCrust pizzaCrust, IEnumerable<Ingredient> ingredients, Guid? id = null) : base(name, 0, id)
     {
         Base = newPizzaBase;
         PizzaIngredients = [];
@@ -32,7 +32,7 @@ public class Pizza : BaseEntity
 
     public new void Update(string newName, PizzaBase pizzaBase, PizzaCrust pizzaCrust, List<Ingredient> ingredients)
     {
-        if (pizzaCrust != null && pizzaCrust.IsCompatibleWith(this))
+        if (pizzaCrust != null && !pizzaCrust.IsCompatibleWith(this))
             throw new Exception("this crust doesn't fit to this pizza");
         Crust = pizzaCrust;
         EditName(newName);
@@ -64,7 +64,7 @@ public class Pizza : BaseEntity
 
     public void EditCrust(PizzaCrust newCrust)
     {
-        if (newCrust != null && newCrust.IsCompatibleWith(this))
+        if (newCrust != null && !newCrust.IsCompatibleWith(this))
             throw new Exception("this crust doesn't fit to this pizza");
         Crust = newCrust;
     }
@@ -79,8 +79,8 @@ public class Pizza : BaseEntity
         List<Ingredient> ingredients = new List<Ingredient>();
         foreach (var ingredient in PizzaIngredients)
         {
-            ingredients.Add(ingredient.Clone() as Ingredient);
+            ingredients.Add(ingredient.Clone());
         }
-        return new Pizza(Name, Base.Clone() as PizzaBase, Crust, ingredients);
+        return new Pizza(Name, Base.Clone(), Crust, ingredients, Id);
     }
 }

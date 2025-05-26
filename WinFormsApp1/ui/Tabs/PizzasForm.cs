@@ -63,7 +63,7 @@ public partial class PizzasForm : Tab<Pizza>
         if (selected == null) return;
         try
         {
-            _repo.Delete(selected.Name);
+            _repo.Delete(selected.Id);
         }
         catch (Exception ex)
         {

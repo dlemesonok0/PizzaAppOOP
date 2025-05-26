@@ -2,9 +2,9 @@ namespace WinFormsApp1.logic.user;
 
 public class OrderItem : BaseEntity
 {
-    public Pizza Pizza { get; set; }
-    public SizePizza SizePizza { get; set; }
-    public bool DuplicateIngredients { get; set; }
+    public Pizza Pizza { get; private set; }
+    public SizePizza SizePizza { get; private set; }
+    public bool DuplicateIngredients { get; private set; }
 
     public OrderItem(Pizza pizza, PizzaCrust pizzaCrust, SizePizza sizePizza, bool duplicateIngredients) : base("order", 0)
     {

@@ -22,7 +22,7 @@ public partial class PizzaBasesForm : Tab<PizzaBase>
             var updated = form.GetResult();
             try
             {
-                _repo.Update(selected.Name, updated.Text, updated.Value);
+                _repo.Update(selected.Id, updated.Text, updated.Value);
             }
             catch (Exception ex)
             {
@@ -56,7 +56,7 @@ public partial class PizzaBasesForm : Tab<PizzaBase>
         if (selected == null) return;
         try
         {
-            _repo.Delete(selected.Name);
+            _repo.Delete(selected.Id);
         }
         catch (Exception ex)
         {
